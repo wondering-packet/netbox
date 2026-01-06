@@ -28,3 +28,14 @@ jobs:
       - name: Print first 50 lines of the WAN JSON (adjust path)
         run: |
           sed -n '1,50p' ./data/wan_ips.json
+
+      - name: Setup Python + run NetBox ping
+        env:
+          NETBOX_URL: ${{ secrets.NETBOX_URL }}
+          NETBOX_TOKEN: ${{ secrets.NETBOX_TOKEN }}
+        run: |
+          python3 -V
+          python3 -m pip install --upgrade pip
+          python3 -m pip install requests
+          python3 scripts/netbox_ping.py
+
