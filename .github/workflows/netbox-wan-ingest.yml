@@ -27,4 +27,4 @@ jobs:
 
       - name: Print first 50 lines of the WAN JSON (adjust path)
         run: |
-          sed -n '1,50p' ./path/to/wan_ips.json
+          sed -n '1,50p' ./data/wan_ips.json

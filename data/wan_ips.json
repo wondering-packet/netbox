@@ -1,0 +1,51 @@
+{
+  "enterprise_network": "DawgieGlobal_Enterprises",
+  "inventory_version": "1.4.2",
+  "wan_endpoints": [
+    {
+      "ip_address": "52.14.210.88",
+      "infrastructure_type": "Cloud",
+      "provider": "AWS",
+      "region": "us-east-2",
+      "environment": "Production",
+      "purpose": "Public Facing Load Balancer",
+      "asset_tag": "AWS-ELB-001"
+    },
+    {
+      "ip_address": "20.112.45.10",
+      "infrastructure_type": "Cloud",
+      "provider": "Azure",
+      "region": "westeurope",
+      "environment": "Staging",
+      "purpose": "VPN Gateway - Site-to-Site",
+      "asset_tag": "AZ-VPN-EU-02"
+    },
+    {
+      "ip_address": "198.51.100.42",
+      "infrastructure_type": "Datacenter",
+      "provider": "Equinix-Colocation",
+      "region": "Chicago-CH3",
+      "environment": "Production",
+      "purpose": "Primary Edge Firewall (Cisco ASA)",
+      "asset_tag": "DC-FW-01-PRI"
+    },
+    {
+      "ip_address": "203.0.113.5",
+      "infrastructure_type": "Hybrid",
+      "provider": "On-Prem / AWS Direct Connect",
+      "region": "us-west-1",
+      "environment": "Production",
+      "purpose": "Direct Connect Egress Router",
+      "asset_tag": "HYB-DX-001"
+    },
+    {
+      "ip_address": "35.200.12.99",
+      "infrastructure_type": "Cloud",
+      "provider": "Google Cloud",
+      "region": "asia-northeast1",
+      "environment": "Development",
+      "purpose": "NAT Gateway",
+      "asset_tag": "GCP-NAT-DEV"
+    }
+  ]
+}
