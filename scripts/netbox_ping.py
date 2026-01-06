@@ -12,7 +12,7 @@ if not NETBOX_URL or not NETBOX_TOKEN:
 url = f"{NETBOX_URL.rstrip('/')}/api/"
 headers = {"Authorization": f"Token {NETBOX_TOKEN}"}
 
-r = requests.get(url, headers=headers, timeout=15)
+r = requests.get(url, headers=headers, timeout=15, verify=False)
 print("Status:", r.status_code)
 print("Body (first 200 chars):", r.text[:200])
 
