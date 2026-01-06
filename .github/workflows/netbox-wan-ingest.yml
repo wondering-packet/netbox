@@ -1,0 +1,30 @@
+name: NetBox WAN IP ingest (self-hosted)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"   # every 6 hours
+
+jobs:
+  sanity:
+    runs-on: [self-hosted, netbox, internal]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Show runner identity + network sanity
+        run: |
+          whoami
+          hostname
+          ip a | sed -n '1,120p'
+          curl -sS https://api.github.com | head -n 3
+
+      - name: List repo files (verify JSON exists)
+        run: |
+          ls -la
+          find . -maxdepth 3 -type f -name "*.json" -print
+
+      - name: Print first 50 lines of the WAN JSON (adjust path)
+        run: |
+          sed -n '1,50p' ./path/to/wan_ips.json
