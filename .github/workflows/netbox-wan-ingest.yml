@@ -29,12 +29,7 @@ jobs:
         run: |
           sed -n '1,50p' ./data/wan_ips.json
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'  # The Python version for this job
-
-      - name: run NetBox ping
+      - name: Setup python + run NetBox ping
         env:
           NETBOX_URL: ${{ secrets.NETBOX_URL }}
           NETBOX_TOKEN: ${{ secrets.NETBOX_TOKEN }}
