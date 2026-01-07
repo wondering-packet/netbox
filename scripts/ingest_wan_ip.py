@@ -10,7 +10,7 @@ NETBOX_URL = os.environ["NETBOX_URL"]
 API_TOKEN = os.environ["NETBOX_TOKEN"]
 
 # intitialze netbox object
-nb = pynetbox(NETBOX_URL, token=API_TOKEN)
+nb = pynetbox.api(NETBOX_URL, token=API_TOKEN)
 nb.http_session.verify = False
 
 # testing block
