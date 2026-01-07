@@ -40,4 +40,5 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install requests
           python3 scripts/netbox_ping.py
+          python3 scripts/ingest_wan_ip.py
 
