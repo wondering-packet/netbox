@@ -48,7 +48,6 @@ jobs:
 
       - name: Run scripts
         run:
-          python3 scripts/netbox_ping.py
           python3 scripts/ingest_wan_ip.py
 
       - name: Upload artifacts
