@@ -6,7 +6,7 @@ on:
     - cron: "0 0 * * 1"   # every week
 
 jobs:
-  Ingest_Wan_IPs:
+  Cleanup_Wan_IPs:
     runs-on: [self-hosted, netbox, internal]
 
     env:
@@ -43,9 +43,17 @@ jobs:
           . .venv/bin/activate
           python3 -m pip install --upgrade pip
           python3 -m pip install requests
-          pip install pynetbox
+          python3 -m pip install pynetbox
 
       - name: Run scripts
         run:
-          python3 scripts/netbox_ping.py
-          python3 scripts/clean_deprecated_wan_ip.py
+          ./.venv/bin/python3 scripts/clean_deprecated_wan_ip.py
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: netbox-ingestion-artifacts-${{ github.run_id }}
+          path: artifacts-cleanup/${{ github.run_id }}
+          if-no-files-found: warn
+          retention-days: 90

@@ -57,15 +57,5 @@ jobs:
           name: netbox-ingestion-artifacts-${{ github.run_id }}
           path: artifacts/${{ github.run_id }}
           if-no-files-found: warn
-          retention-days: 365
-      
-      - name: Debug artifact paths
-        if: always()
-        run: |
-          echo "PWD=$(pwd)"
-          echo "Repo root contents:"
-          ls -la
-          echo "Artifacts tree:"
-          ls -la artifacts || true
-          find . -maxdepth 3 -type f -name "*.json" -o -type f -name "*.log" || true
+          retention-days: 90
 
