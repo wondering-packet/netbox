@@ -12,6 +12,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 NETBOX_URL = os.environ["NETBOX_URL"]
 API_TOKEN = os.environ["NETBOX_TOKEN"]
+RUN_ID = os.environ["RUN_ID"]
 
 # intitialze netbox object
 nb = pynetbox.api(NETBOX_URL, token=API_TOKEN)
@@ -23,7 +24,7 @@ records_processed_b = 0
 cleanup_logs = []
 
 # create artifiact directory if it doens't exist:
-folder_path = "./artifacts-cleanup"
+folder_path = f"./artifacts-cleanup/{RUN_ID}"
 os.makedirs(folder_path, exist_ok=True)
 # function to collect artifacts:
 
