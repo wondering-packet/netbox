@@ -12,6 +12,7 @@ jobs:
     env:
       NETBOX_URL: ${{ secrets.NETBOX_URL }}
       NETBOX_TOKEN: ${{ secrets.NETBOX_TOKEN }}
+      RUN_ID: ${{ github.run_id }}
 
     steps:
       - name: Checkout repo
@@ -50,3 +51,12 @@ jobs:
           python3 scripts/netbox_ping.py
           python3 scripts/ingest_wan_ip.py
           python3 scripts/clean_deprecated_wan_ip.py
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: netbox-ingestion-artifacts-${{ github.run_id }}
+          path: artifacts/${{ github.run_id }}
+          if-no-files-found: warn
+          retention-days: 365

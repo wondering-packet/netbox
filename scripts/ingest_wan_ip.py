@@ -13,6 +13,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 NETBOX_URL = os.environ["NETBOX_URL"]
 API_TOKEN = os.environ["NETBOX_TOKEN"]
+RUN_ID = os.environ["RUN_ID"]
 
 # intitialze netbox object
 nb = pynetbox.api(NETBOX_URL, token=API_TOKEN)
@@ -60,7 +61,7 @@ for each_ip in dataset_b_source:
 print(f"Total records processed from NetBox: {records_processed_b}")
 
 # create artifiact directory if it doens't exist:
-folder_path = "./artifacts"
+folder_path = f"./artifacts/{RUN_ID}"
 os.makedirs(folder_path, exist_ok=True)
 # function to collect artifacts:
 
