@@ -9,10 +9,9 @@ from pprint import pprint
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Load credentials
-with open("/automation/secrets/netbox.json", "r") as f:
-    secrets = json.load(f)
-    NETBOX_URL = secrets["NETBOX_URL"]
-    API_TOKEN = secrets["API_TOKEN"]
+
+NETBOX_URL = os.environ["NETBOX_URL"]
+API_TOKEN = os.environ["NETBOX_TOKEN"]
 
 # intitialze netbox object
 nb = pynetbox.api(NETBOX_URL, token=API_TOKEN)

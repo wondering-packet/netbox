@@ -10,17 +10,16 @@ from pprint import pprint
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Load credentials
-with open("/automation/secrets/netbox.json", "r") as f:
-    secrets = json.load(f)
-    NETBOX_URL = secrets["NETBOX_URL"]
-    API_TOKEN = secrets["API_TOKEN"]
+
+NETBOX_URL = os.environ["NETBOX_URL"]
+API_TOKEN = os.environ["NETBOX_TOKEN"]
 
 # intitialze netbox object
 nb = pynetbox.api(NETBOX_URL, token=API_TOKEN)
 nb.http_session.verify = False
 
 ### ---load data to build A---###
-with open("./Projects/Netbox-data-ingestion-github/data/wan_ips.json", "r") as f:
+with open("./data/wan_ips.json", "r") as f:
     dataset_a_source = json.load(f)
     # pprint(dataset_a)
 
