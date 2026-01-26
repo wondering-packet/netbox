@@ -44,7 +44,7 @@ jobs:
           . .venv/bin/activate
           python3 -m pip install --upgrade pip
           python3 -m pip install requests
-          pip install pynetbox
+          python3 -m pip install pynetbox
 
       - name: Run scripts
         run:
