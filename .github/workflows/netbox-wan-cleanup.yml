@@ -12,6 +12,7 @@ jobs:
     env:
       NETBOX_URL: ${{ secrets.NETBOX_URL }}
       NETBOX_TOKEN: ${{ secrets.NETBOX_TOKEN }}
+      RUN_ID: ${{ github.run_id }}
 
     steps:
       - name: Checkout repo
