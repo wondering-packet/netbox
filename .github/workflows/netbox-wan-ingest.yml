@@ -9,6 +9,10 @@ jobs:
   Ingest_Wan_IPs:
     runs-on: [self-hosted, netbox, internal]
 
+    env:
+      NETBOX_URL: ${{ secrets.NETBOX_URL }}
+      NETBOX_TOKEN: ${{ secrets.NETBOX_TOKEN }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
