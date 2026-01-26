@@ -6,7 +6,7 @@ on:
     - cron: "0 */6 * * *"   # every 6 hours
 
 jobs:
-  sanity:
+  Ingest_Wan_IPs:
     runs-on: [self-hosted, netbox, internal]
 
     steps:
@@ -29,7 +29,7 @@ jobs:
         run: |
           sed -n '1,50p' ./data/wan_ips.json
 
-      - name: Setup python + run NetBox ping
+      - name: Setup python + install pynetbox library
         env:
           NETBOX_URL: ${{ secrets.NETBOX_URL }}
           NETBOX_TOKEN: ${{ secrets.NETBOX_TOKEN }}
@@ -40,6 +40,8 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install requests
           pip install pynetbox
+
+      - name: Run scripts
+        run:
           python3 scripts/netbox_ping.py
           python3 scripts/ingest_wan_ip.py
-

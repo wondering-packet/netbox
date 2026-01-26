@@ -17,4 +17,4 @@ print("Status:", r.status_code)
 print("Body (first 200 chars):", r.text[:200])
 
 r.raise_for_status()
-print("✅ NetBox API reachable + token accepted.")
+print("SUCCESS: NetBox API reachable & token accepted.")
