@@ -45,3 +45,4 @@ jobs:
         run:
           python3 scripts/netbox_ping.py
           python3 scripts/ingest_wan_ip.py
+          python3 scripts/clean_deprecated_wan_ip.py
