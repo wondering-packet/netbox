@@ -10,12 +10,15 @@ pipeline {
 
     stage('Sanity') {
       steps {
-        sh '''#/usr/bin/env bash
+        sh (label: 'sanity', script: '''
+        bash -lc '
           set -euxo pipefail
           echo "Hello from Jenkins on $(hostname)"
           git rev-parse --short HEAD
           ls -la
+        '
         '''
+        )
       }
     }
   }
