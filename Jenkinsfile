@@ -10,7 +10,7 @@ pipeline {
 
     stage('Sanity') {
       steps {
-        sh '''
+        sh '''#/usr/bin/env bash
           set -euxo pipefail
           echo "Hello from Jenkins on $(hostname)"
           git rev-parse --short HEAD
