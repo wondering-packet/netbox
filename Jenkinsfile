@@ -47,6 +47,7 @@ pipeline {
             echo "Running WAN IP reconcilation scripts"
             # netbox connectivity test
             python3 ./scripts/netbox_ping.py
+            '
             '''
             )
         }
