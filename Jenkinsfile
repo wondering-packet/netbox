@@ -40,7 +40,9 @@ pipeline {
     }
     stage('WAN scripts'){
         steps {
-            sh (label: 'Setup', script: '''#!/bin/bash -euo pipefail
+            sh (label: 'Setup', script: '''
+            bash -lc '
+            set -euo pipefail
             . .netbox-venv/bin/activate
             echo "Running WAN IP reconcilation scripts"
             # netbox connectivity test
