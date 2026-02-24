@@ -52,6 +52,7 @@ pipeline {
             // setting env variables for this stage. we will use these in the script.
             NETBOX_URL = credentials('NETBOX_URL')
             NETBOX_TOKEN = credentials('NETBOX_TOKEN')
+            RUN_ID = "${env.BUILD_ID}"  // using jenkins build id in scripts later for logging/tracking.
         }
         steps {
             sh (label: 'Setup', script: '''#!/bin/bash
