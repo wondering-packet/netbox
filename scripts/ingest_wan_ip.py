@@ -15,6 +15,13 @@ NETBOX_URL = os.environ["NETBOX_URL"]
 API_TOKEN = os.environ["NETBOX_TOKEN"]
 RUN_ID = os.environ["RUN_ID"]
 
+# for local testing:
+# with open("/automation/secrets/netbox.json", "r") as f:
+#     secrets = json.load(f)
+#     NETBOX_URL = secrets["NETBOX_URL"]
+#     API_TOKEN = secrets["API_TOKEN"]
+#     RUN_ID = 000
+
 # intitialze netbox object
 nb = pynetbox.api(NETBOX_URL, token=API_TOKEN)
 nb.http_session.verify = False
@@ -22,7 +29,7 @@ nb.http_session.verify = False
 ### ---load data to build A---###
 with open("./data/wan_ips.json", "r") as f:
     dataset_a_source = json.load(f)
-    # pprint(dataset_a)
+    # pprint(dataset_a_source)
 
 # loading relevent data from the source data into the dataset A list.
 # this list will be used to create/update IP in netbox.
