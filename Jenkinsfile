@@ -14,8 +14,7 @@ pipeline {
     stage('Setup python venv'){
         steps {
             // 'sh' is our linux bash command runner. label is just an identifier for the step.
-          sh (label: 'setup-venv', script: '''
-          #!/bin/bash
+          sh (label: 'setup-venv', script: '''#!/bin/bash
           # wrapping all commands under 'bash -lc' to force a real bash shell.
 
           set -euo pipefail # this is a common set of bash options to make the script more robust. it means:
