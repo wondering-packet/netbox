@@ -15,7 +15,6 @@ pipeline {
         steps {
             // 'sh' is our linux bash command runner. label is just an identifier for the step.
           sh (label: 'setup-venv', script: '''#!/bin/bash
-          # wrapping all commands under 'bash -lc' to force a real bash shell.
 
           set -euo pipefail # this is a common set of bash options to make the script more robust. it means:
                           # -e: exit immediately if a command exits with a non-zero status.
@@ -55,14 +54,12 @@ pipeline {
             API_TOKEN = credentials('NETBOX_TOKEN')
         }
         steps {
-            sh (label: 'Setup', script: '''
-            bash -lc '
+            sh (label: 'Setup', script: '''#!/bin/bash
             set -euo pipefail
             . .netbox-venv/bin/activate
             echo "Running WAN IP reconcilation scripts"
             # netbox connectivity test
             python3 ./scripts/netbox_ping.py
-            '
             '''
             )
         }
