@@ -58,16 +58,10 @@ pipeline {
             sh (label: 'Connectivity test', script: '''#!/bin/bash
             set -euo pipefail
             . .netbox-venv/bin/activate
-            echo "Running netbox connectivity test script"
+            echo "Step 1: Running netbox connectivity test script"
             python3 ./scripts/netbox_ping.py
-            '''
-            )
-        }
-        steps{
-            sh (label: "WAN IP reconcilation script", script: '''#!/bin/bash
-            set -euo pipefail
-            . .netbox-venv/bin/activate
-            echo "Running WAN IP reconcilation script"
+
+            echo "Step 2: Running WAN IP reconcilation script"
             python3 ./scripts/ingest_wan_ip.py
             '''
             )
