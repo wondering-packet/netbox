@@ -3,7 +3,7 @@ import sys
 import requests
 
 NETBOX_URL = os.environ["NETBOX_URL"]
-API_TOKEN = os.environ["API_TOKEN"]
+API_TOKEN = os.environ["NETBOX_TOKEN"]
 
 if not NETBOX_URL or not API_TOKEN:
     print("Missing NETBOX_URL or NETBOX_TOKEN env vars.")
