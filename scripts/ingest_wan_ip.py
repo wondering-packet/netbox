@@ -88,6 +88,7 @@ case_2_ips = []
 # Case 3: Exists in B but not in A
 case_3_ips = []
 payload_update_last_seen = {
+    "status": "active",
     "custom_fields": {
         "last_seen": date.today().isoformat()
     }
