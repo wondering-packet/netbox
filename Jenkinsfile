@@ -54,7 +54,7 @@ pipeline {
         environment {
             // setting env variables for this stage. we will use these in the script.
             NETBOX_URL = credentials('NETBOX_URL')
-            API_TOKEN = credentials('API_TOKEN')
+            API_TOKEN = credentials('NETBOX_TOKEN')
         }
         steps {
             sh (label: 'Setup', script: '''
