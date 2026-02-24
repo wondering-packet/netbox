@@ -15,9 +15,9 @@ pipeline {
         steps {
             // 'sh' is our linux bash command runner. label is just an identifier for the step.
           sh (label: 'setup-venv', script: '''
+          #!/usr/bin/env bash
           # wrapping all commands under 'bash -lc' to force a real bash shell.
-          # start quote for bash -lc.
-          bash -lc '
+
           set -euo pipefail # this is a common set of bash options to make the script more robust. it means:
                           # -e: exit immediately if a command exits with a non-zero status.
                           # -u: treat unset variables as an error and exit immediately.
@@ -43,8 +43,7 @@ pipeline {
             echo "ERROR: requirements.txt file not found"
             exit 1
           fi
-        # end quote for bash -lc.
-        '
+
         '''
         )
         }
