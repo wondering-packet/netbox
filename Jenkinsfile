@@ -55,14 +55,17 @@ pipeline {
             RUN_ID = "${env.BUILD_ID}"  // using jenkins build id in scripts later for logging/tracking.
         }
         steps {
-            sh (label: 'Connectivity test', script: '''#!/bin/bash
+            sh (label: 'connectinvity test + reconcilation + cleanup', script: '''#!/bin/bash
             set -euo pipefail
             . .netbox-venv/bin/activate
-            echo "Step 1: Running netbox connectivity test script"
+            echo "\nStep 1: Running netbox connectivity test script"
             python3 ./scripts/netbox_ping.py
 
-            echo "Step 2: Running WAN IP reconcilation script"
+            echo "\nStep 2: Running WAN IP reconcilation script"
             python3 ./scripts/ingest_wan_ip.py
+
+            echo "\nStep 3: Running cleanup script"
+            python3 ./scripts/clean_deprecated_wan_ip.py
             '''
             )
         }
