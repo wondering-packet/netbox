@@ -1,44 +1,59 @@
-pipeline {
-  agent any
+// bash is new to me. just adding a few comments for easier understanding. code is generated with the help of chatgpt.
 
+pipeline {
+  agent any     // run this pipeline on any executor.
+    // stages are the high level steps. each stage can have multiple steps.
   stages {
+    // a standard 'checkout' stage. this checks out the git repo locally.
     stage('Checkout') {
       steps {
         checkout scm
       }
     }
-
+    // setting up python & the venv.
     stage('Setup python venv'){
         steps {
+            // 'sh' is our linux bash command runner. label is just an identifier for the step.
           sh (label: 'sanity', script: '''
-          bash -lc '
-          set -euo pipefail
+          # wrapping all commands under 'bash -lc' to force a real bash shell.
+          bash -lc '    # start quote for bash -lc.
+          set -euo pipefail # this is a common set of bash options to make the script more robust. it means:
+                          # -e: exit immediately if a command exits with a non-zero status.
+                          # -u: treat unset variables as an error and exit immediately.
+                          # -o pipefail: if any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
           echo "Hello from Jenkins on $(hostname)"
-          git rev-parse --short HEAD
-          ls -la
+          git rev-parse --short HEAD    # prints out the current commit hash.
+          ls -la    # optional; list directory contents.
           echo "Setting up python venv and installing dependencies"
           python3 --version
           # create/use existing venv
-          if [ ! -d .netbox-venv ]; then
+          # bash logic. starts with 'if' ends with 'fi'.
+          if [ ! -d .netbox-venv ]; then    # if the directory (-d) doesn't (!) exist, then create the venv.
             python3 -m venv .netbox-venv
           fi
 
-          . .netbox-venv/bin/activate
-          python3 -m pip install --upgrade pip wheel setuptools
+          . .netbox-venv/bin/activate   # activate the venv. we will be using this same venv for all stages.
+          python3 -m pip install --upgrade pip wheel setuptools # a standard command to upgrade pip and related tools before installing dependencies.
 
-          # install dependency
+          # install dependency. another bash if statement. '-f' checks for file.
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           else
             echo "ERROR: requirements.txt file not found"
             exit 1
           fi
-        '
+        '   # end quote for bash -lc.
         '''
         )
         }
     }
+    // next stage. running scripts here.
     stage('WAN scripts'){
+        environment {
+            // setting env variables for this stage. we will use these in the script.
+            NETBOX_URL = credentials('NETBOX_URL')
+            API_TOKEN = credentials('API_TOKEN')
+        }
         steps {
             sh (label: 'Setup', script: '''
             bash -lc '
