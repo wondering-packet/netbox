@@ -2,8 +2,8 @@ name: NetBox WAN IP cleanup (self-hosted)
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * 1"   # every week
+  # schedule:
+  #   - cron: "0 0 * * 1"   # every week
 
 jobs:
   Cleanup_Wan_IPs:
