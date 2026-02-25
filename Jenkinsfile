@@ -71,4 +71,10 @@ pipeline {
         }
     }
     }
+  
+  post {
+    always {
+      echo "Pipeline completed. Collecting artifacts."
+      archiveArtifacts artifacts: "artifacts/${env.BUILD_ID}/**", allowEmptyArchive: true, fingerprint: true
+    }
   }
