@@ -78,9 +78,9 @@ def _delete_dir(p: Path, dry_run: bool) -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--artifacts", default="./artifacts",
+    ap.add_argument("--artifacts", default="../artifacts",
                     help="Path to artifacts root")
-    ap.add_argument("--cleanup", default="./artifacts-cleanup",
+    ap.add_argument("--cleanup", default="../artifacts-cleanup",
                     help="Path to artifacts-cleanup root")
     ap.add_argument("--keep", type=int, default=200,
                     help="How many newest RUN_IDs to keep")
