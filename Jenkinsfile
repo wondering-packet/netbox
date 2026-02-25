@@ -74,8 +74,9 @@ pipeline {
   
   post {
     always {
-      echo "Pipeline completed. Collecting artifacts."
+      echo "\nPipeline completed. Collecting artifacts."
       archiveArtifacts artifacts: "artifacts/${env.BUILD_ID}/**", allowEmptyArchive: true, fingerprint: true
+      archiveArtifacts artifacts: "artifacts-cleanup/${env.BUILD_ID}/**", allowEmptyArchive: true, fingerprint: true
     }
   }
 }
