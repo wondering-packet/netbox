@@ -75,7 +75,7 @@ os.makedirs(folder_path, exist_ok=True)
 
 def col_artifacts(artifacts, file_name):
     timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-    artifact_file = f"{folder_path}/{timestamp}_{file_name}"
+    artifact_file = f"{folder_path}/{RUN_ID}_{timestamp}_{file_name}"
     with open(artifact_file, "w") as f:
         json.dump(artifacts, f, indent=4)
 
