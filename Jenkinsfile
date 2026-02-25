@@ -78,3 +78,4 @@ pipeline {
       archiveArtifacts artifacts: "artifacts/${env.BUILD_ID}/**", allowEmptyArchive: true, fingerprint: true
     }
   }
+}
