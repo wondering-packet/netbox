@@ -47,7 +47,7 @@ pipeline {
         }
     }
     // next stage. running scripts here.
-    stage('WAN scripts'){
+    stage('Reconcilation') {
         environment {
             // setting env variables for this stage. we will use these in the script.
             NETBOX_URL = credentials('NETBOX_URL')
@@ -55,7 +55,7 @@ pipeline {
             RUN_ID = "${env.BUILD_ID}"  // using jenkins build id in scripts later for logging/tracking.
         }
         steps {
-            sh (label: 'connectinvity test + reconcilation + cleanup', script: '''#!/bin/bash
+            sh (label: 'connectinvity test + reconcilation', script: '''#!/bin/bash
             set -euo pipefail
             . .netbox-venv/bin/activate
             echo "\nStep 1: Running netbox connectivity test script"
@@ -63,9 +63,25 @@ pipeline {
 
             echo "\nStep 2: Running WAN IP reconcilation script"
             python3 ./scripts/ingest_wan_ip.py
+            '''
+            )
+        }
+    }
 
-            echo "\nStep 3: Running cleanup script"
-            python3 ./scripts/clean_deprecated_wan_ip.py
+    stage('Artifacts Offloading') {
+        environment {
+            RUN_ID = "${env.BUILD_ID}"
+        }
+        steps {
+            sh (label: 'Offloading artifacts to jenkins smb share', script: '''#!/bin/bash
+            set -euo pipefail
+            DEST="/mnt/jenkins-artifacts/${JOB_NAME}/${RUN_ID}"
+            mkdir -p "$DEST"
+            [ -d "artifacts/${RUN_ID}" ] && rsync -a "artifacts/${RUN_ID}/" "$DEST/artifacts/"
+            [ -d "artifacts-cleanup/${RUN_ID}" ] && rsync -a "artifacts-cleanup/${RUN_ID}/" "$DEST/artifacts-cleanup/"
+
+            echo "Artifacts offloaded to $DEST. Contents:"
+            ls -la "$DEST"
             '''
             )
         }
@@ -74,10 +90,8 @@ pipeline {
   
   post {
     always {
-      echo "\nPipeline completed. Collecting artifacts."
-      archiveArtifacts artifacts: "artifacts/${env.BUILD_ID}/**,artifacts-cleanup/${env.BUILD_ID}/**",
-      allowEmptyArchive: true,
-      fingerprint: true
-    }
+      // cleaning up the workspace
+      cleanWs()
   }
+}
 }
