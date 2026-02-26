@@ -28,15 +28,15 @@ pipeline {
           # create/use existing venv
           # bash logic. starts with 'if' ends with 'fi'.
           if [ ! -d .netbox-venv ]; then    # if the directory (-d) doesn't (!) exist, then create the venv.
-            python3 -m venv .netbox-venv
+            .netbox-venv/bin/python -m venv .netbox-venv
           fi
 
           . .netbox-venv/bin/activate   # activate the venv. we will be using this same venv for all stages.
-          python3 -m pip install --upgrade pip wheel setuptools # a standard command to upgrade pip and related tools before installing dependencies.
+          .netbox-venv/bin/python -m pip install --upgrade pip wheel setuptools # a standard command to upgrade pip and related tools before installing dependencies.
 
           # install dependency. another bash if statement. '-f' checks for file.
           if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
+            .netbox-venv/bin/python -mpip install -r requirements.txt
           else
             echo "ERROR: requirements.txt file not found"
             exit 1
