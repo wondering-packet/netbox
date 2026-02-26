@@ -28,7 +28,7 @@ pipeline {
           # create/use existing venv
           # bash logic. starts with 'if' ends with 'fi'.
           if [ ! -d .netbox-venv ]; then    # if the directory (-d) doesn't (!) exist, then create the venv.
-            .netbox-venv/bin/python -m venv .netbox-venv
+            python3 -m venv .netbox-venv
           fi
 
           . .netbox-venv/bin/activate   # activate the venv. we will be using this same venv for all stages.
