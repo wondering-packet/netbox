@@ -81,7 +81,7 @@ pipeline {
             [ -d "artifacts-cleanup/${RUN_ID}" ] && rsync -a "artifacts-cleanup/${RUN_ID}/" "$DEST/artifacts-cleanup/"
 
             echo "Artifacts offloaded to $DEST. Contents:"
-            ls -la "$DEST"
+            ls -R "$DEST"
             '''
             )
         }
