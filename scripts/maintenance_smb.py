@@ -86,7 +86,7 @@ def main() -> int:
     ap.add_argument(
         "--keep",
         type=int,
-        default=3,
+        default=200,
         help="Number of newest run_id folders to keep per job",
     )
     ap.add_argument(

@@ -67,7 +67,7 @@ for each_ip in nb.ipam.ip_addresses.filter(
     print("-----------------------------------------------------")
     if last_seen_days is None:
         print(
-            f"{address} -- Age: UNKNOWN days -- Requires review (last seen missing)")
+            f"{address} -- Age: UNKNOWN days -- Action: Requires review (last seen missing)")
         existing_slugs = []
         if tags:
             print(f"\t{address} -- existing tags: ")
@@ -83,18 +83,18 @@ for each_ip in nb.ipam.ip_addresses.filter(
         cleanup_logs.append({
             "address": address,
             "action": "marked for review",
-            "message": f"{address} -- Age: UNKNOWN days -- Requires review (last seen missing)"
+            "message": f"{address} -- Age: UNKNOWN days -- Action: Requires review (last seen missing)"
         })
         records_processed_b += 1
     elif last_seen_days >= 90:
         each_ip.delete()
         print(
-            f"{address} -- Age: {last_seen_days} days -- Deleted")
+            f"{address} -- Age: {last_seen_days} days -- Action: Deleted")
         cleanup_logs.append(
             {
                 "address": address,
                 "action": "deleted",
-                "message": f"{address} -- Age: {last_seen_days} days -- Deleted"
+                "message": f"{address} -- Age: {last_seen_days} days -- Action: Deleted"
             }
         )
         records_processed_b += 1

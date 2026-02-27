@@ -27,7 +27,7 @@ pipeline {
           [ -d "$ROOT" ] || { echo "ERROR: $ROOT not found (SMB not mounted?)"; exit 1; }
 
           python3 --version
-          python3 scripts/maintenance_prune_smb.py --root "$ROOT" --keep 200
+          python3 scripts/maintenance_smb.py --root "$ROOT" --keep 2
         '''
       }
     }
