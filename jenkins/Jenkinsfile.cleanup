@@ -1,7 +1,7 @@
 // bash is new to me. just adding a few comments for easier understanding. code is generated with the help of chatgpt.
 
 pipeline {
-  agent any     // run this pipeline on any executor.
+  agent netbox     // run this pipeline on any executor.
     // stages are the high level steps. each stage can have multiple steps.
   stages {
     // a standard 'checkout' stage. this checks out the git repo locally.
@@ -47,7 +47,7 @@ pipeline {
         }
     }
     // next stage. running scripts here.
-    stage('Reconcilation') {
+    stage('Cleanup') {
         environment {
             // setting env variables for this stage. we will use these in the script.
             NETBOX_URL = credentials('NETBOX_URL')
@@ -55,14 +55,14 @@ pipeline {
             RUN_ID = "${env.BUILD_ID}"  // using jenkins build id in scripts later for logging/tracking.
         }
         steps {
-            sh (label: 'connectinvity test + reconcilation', script: '''#!/bin/bash
+            sh (label: 'connectinvity test + cleanup', script: '''#!/bin/bash
             set -euo pipefail
             . .netbox-venv/bin/activate
             echo "\nStep 1: Running netbox connectivity test script"
-            python3 ./scripts/netbox_ping.py
+            .netbox-venv/bin/python ./scripts/netbox_ping.py
 
-            echo "\nStep 2: Running WAN IP reconcilation script"
-            python3 ./scripts/ingest_wan_ip.py
+            echo "\nStep 2: Running cleanup script to remove old (>90 days) deprecated WAN IPs"
+            .netbox-venv/bin/python ./scripts/clean_deprecated_wan_ip.py
             '''
             )
         }
@@ -77,8 +77,7 @@ pipeline {
             set -euo pipefail
             DEST="/mnt/jenkins-artifacts/${JOB_NAME}/${RUN_ID}"
             mkdir -p "$DEST"
-            [ -d "artifacts/${RUN_ID}" ] && rsync -a "artifacts/${RUN_ID}/" "$DEST/artifacts/"
-            [ -d "artifacts-cleanup/${RUN_ID}" ] && rsync -a "artifacts-cleanup/${RUN_ID}/" "$DEST/artifacts-cleanup/"
+            [ -d "artifacts-cleanup/${RUN_ID}" ] && rsync -a "artifacts-cleanup/${RUN_ID}/" "$DEST/"
 
             echo "Artifacts offloaded to $DEST. Contents:"
             ls -R "$DEST"

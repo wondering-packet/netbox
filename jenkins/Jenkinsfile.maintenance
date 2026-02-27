@@ -1,0 +1,41 @@
+pipeline {
+  agent any
+
+  options {
+    disableConcurrentBuilds()
+    timestamps()
+  }
+
+  triggers {
+    cron('H 3 * * *')   // daily around 3am
+  }
+
+  stages {
+    stage('Checkout') {
+      steps { checkout scm }
+    }
+
+    stage('Run maintenance prune') {
+      steps {
+        sh '''#!/bin/bash
+          set -euo pipefail
+
+          # Root of your SMB-mounted artifacts
+          ROOT="/mnt/jenkins-artifacts"
+
+          # Sanity check: fail fast if SMB isn't mounted
+          [ -d "$ROOT" ] || { echo "ERROR: $ROOT not found (SMB not mounted?)"; exit 1; }
+
+          python3 --version
+          python3 scripts/maintenance_prune_smb.py --root "$ROOT" --keep 200
+        '''
+      }
+    }
+  }
+
+  post {
+    always {
+      cleanWs()
+    }
+  }
+}
