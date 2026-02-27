@@ -3,7 +3,7 @@
   "inventory_version": "1.4.2",
   "meraki": [
     {
-      "ip": "52.14.210.87",
+      "ip": "52.14.210.89",
       "infrastructure_type": "Cloud",
       "provider": "AWS",
       "region": "us-east-2",
@@ -12,7 +12,7 @@
       "caption": "AWS-ELB-001"
     },
     {
-      "ip": "20.112.45.13",
+      "ip": "20.112.45.133",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
       "region": "westeurope",
@@ -21,7 +21,7 @@
       "caption": "AZ-VPN-EU-02"
     },
     {
-      "ip": "20.112.45.110",
+      "ip": "20.112.45.130",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
       "region": "westeurope",
