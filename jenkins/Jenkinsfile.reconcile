@@ -1,7 +1,9 @@
 // bash is new to me. just adding a few comments for easier understanding. code is generated with the help of chatgpt.
 
 pipeline {
-  agent netbox     // run this pipeline on any executor.
+    agent {
+    label 'netbox'
+  }    // run this pipeline on any executor.
     // stages are the high level steps. each stage can have multiple steps.
   stages {
     // a standard 'checkout' stage. this checks out the git repo locally.
