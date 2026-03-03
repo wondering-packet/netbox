@@ -12,7 +12,7 @@
       "caption": "AWS-ELB-001"
     },
     {
-      "ip": "20.112.45.134",
+      "ip": "20.112.45.1",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
       "region": "westeurope",
@@ -21,7 +21,7 @@
       "caption": "AZ-VPN-EU-02"
     },
     {
-      "ip": "20.112.45.130",
+      "ip": "20.112.45.12",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
       "region": "westeurope",
