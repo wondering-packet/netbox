@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
 """
+had chatgpt write this to prune old Jenkins artifacts from SMB / shared storage.
+make sure the smb share has been mounted before running. path /mnt/jenkins-artifacts
+I've got the smb share created on a windows box. a service account with RW permission is used.
+fstab file entry looks like this:
+
+//dc-01.intra.wonderingpacket.com/jenkins-artifacts  /mnt/jenkins-artifacts  cifs  credentials=/etc/samba/jenkins-artifacts.creds,uid=jenkins,gid=jenkins,dir_mode=0750,file_mode=0640,iocharset=utf8,nofail,_netdev  0  0
+
+--------
+
 maintenance_smb.py
 
 Prunes old Jenkins artifacts stored on SMB / shared storage.
