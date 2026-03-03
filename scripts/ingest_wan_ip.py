@@ -142,7 +142,15 @@ for each_ip_a in dataset_a:
                     }
                 )
             elif "external-sot-github" in existing_slugs:   # branch 2
-                ip.update(payload_update_last_seen)
+                required = [each_ip_a["platform"]]
+                for slug in required:
+                    if slug not in existing_slugs:
+                        existing_slugs.append(slug)
+                payload = copy.deepcopy(payload_update_last_seen)
+                payload["tags"] = [{"slug": each_tag}
+                                   for each_tag in existing_slugs]
+
+                ip.update(payload)
                 print(
                     f"{ip['address']} -- External SoT GitHub -- last seen updated.")
                 case_2_ips.append(
@@ -153,7 +161,15 @@ for each_ip_a in dataset_a:
                     }
                 )
             elif "review-required" in existing_slugs:   # branch 3
-                ip.update(payload_update_last_seen)
+                required = ["external-sot-github", each_ip_a["platform"]]
+                for slug in required:
+                    if slug not in existing_slugs:
+                        existing_slugs.append(slug)
+                payload = copy.deepcopy(payload_update_last_seen)
+                payload["tags"] = [{"slug": each_tag}
+                                   for each_tag in existing_slugs]
+
+                ip.update(payload)
                 print(
                     f"{ip['address']} -- Review-Required -- last seen updated.")
                 case_2_ips.append(
