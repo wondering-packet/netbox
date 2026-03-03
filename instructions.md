@@ -24,7 +24,7 @@ flowchart LR
 
 ```
 
-# WAN IP Ingestion, Cleanup & Storage maintenance Workflows
+# WAN IP Ingestion, Cleanup & Storage maintenance
 
 ## Overview
 
@@ -34,7 +34,7 @@ There are 3 pipelines:
 2. **`Jenkinsfile.cleanup`** - executes WAN IP cleanup workflow.
 3. **`Jenkinsfile.maintenance`** - executes maintenance script to remove old build artifacts from the SMB share.
 
-Above pipelinces executes various workflows which consists of **two core scripts**, **one optional validation script** & **one helper maintenance script**:
+Above pipelinces collectively depends on **two core scripts**, **one optional validation script** & **one helper maintenance script**:
 
 1. **`ingest_wan_ip.py`** – main worker script responsible for ingesting and reconciling WAN IP data.
 2. **`clean_deprecated_wan_ip.py`** – cleanup script for removing deprecated WAN IPs.
@@ -151,10 +151,12 @@ Create these in NetBox before the workflow goes live.
   - Tag: `External SoT GitHub`
   - Tag: `Aruba` or `Meraki` or whatever the platform is
   - Set `last_seen`
+  - Set `status` to **Active**
   - Punt raw data for the IP from A as a comment.
 
 #### Case 2: Exists in both A and B
 - Update IP details
+  - Ensure `Status` is set to **Active** if not then set it.
   - If `External SoT GitHub` exists → update `last_seen`
   - If `manual` tag exists → skip
   - Else → tag `Review-Required` and update `last_seen`
@@ -203,7 +205,7 @@ Does basic reachability test to NetBox & GitHub.
 > [!NOTE]
 > This script is executed by `Jenkinsfile.maintenance` pipeline.
 
-All artifacts collected from the reconcilation & cleanup scripts are stored in a remote SMB share (this location can be changed as per your env). This script keeps latest 200 build artifacts (from each pipeline) which should take up about 200-400MB of storage space on remote.
+All artifacts collected from the reconcilation & cleanup scripts are stored on a remote SMB share (this location can be changed as per your env). This script keeps latest 200 build artifacts (from each pipeline) which should take up about 200-400MB of storage space on remote.
 
 
 

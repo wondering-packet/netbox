@@ -5,6 +5,7 @@ import urllib3
 import json
 import os
 import ipaddress
+import copy
 from datetime import date, datetime
 from pprint import pprint
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -53,6 +54,10 @@ for platform, ip_data in dataset_a_source.items():
 
 # pprint(dataset_a)
 print(f"\nTotal records processed from JSON: {records_processed_a}")
+
+if records_processed_a <= 50:
+    print("Dataset A likely corrupt or not updated\n\t Skipping workflow executions to avoid potential mass updates")
+    exit(1)
 
 ### ---load data to build B---###
 dataset_b_source = nb.ipam.ip_addresses.all()
@@ -159,10 +164,13 @@ for each_ip_a in dataset_a:
                     }
                 )
             else:   # branch 4
-                print(f"{ip['address']} -- no existing tags")
-                if not "review-required" in existing_slugs:
-                    existing_slugs.append("review-required")
-                payload = payload_update_last_seen.copy()
+                print(f"{ip['address']} -- no tags or missing required tags")
+                required = ["review-required",
+                            "external-sot-github", each_ip_a["platform"]]
+                for slug in required:
+                    if slug not in existing_slugs:
+                        existing_slugs.append(slug)
+                payload = copy.deepcopy(payload_update_last_seen)
                 payload["tags"] = [{"slug": each_tag}
                                    for each_tag in existing_slugs]
 
