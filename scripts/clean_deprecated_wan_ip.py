@@ -100,6 +100,6 @@ for each_ip in nb.ipam.ip_addresses.filter(
         )
         records_processed_b += 1
 print("===============================================================")
-print(f"Total records processed from NetBox: {records_processed_b}")
+print(f"Total records processed from NetBox (affected): {records_processed_b}")
 print("-----------------------------------------------------")
 col_artifacts(cleanup_logs, "cleanup_logs.json")
