@@ -1,548 +1,548 @@
 {
   "enterprise_network": "DawgieGlobal_Enterprises",
-  "inventory_version": "1.4.2",
+  "inventory_version": "2.1.0",
   "meraki": [
     {
-      "ip": "52.14.210.1",
+      "ip": "52.14.210.33",
       "infrastructure_type": "Cloud",
       "provider": "AWS",
-      "region": "us-east-1",
+      "region": "us-east-2",
       "environment": "Production",
-      "purpose": "App-Server-01",
-      "caption": "AWS-PROD-001"
+      "purpose": "Public Facing Load Balancer",
+      "caption": "AWS-ELB-001"
     },
     {
-      "ip": "52.14.210.2",
+      "ip": "20.112.45.134",
       "infrastructure_type": "Cloud",
-      "provider": "AWS",
-      "region": "us-east-1",
-      "environment": "Production",
-      "purpose": "App-Server-02",
-      "caption": "AWS-PROD-002"
-    },
-    {
-      "ip": "52.14.210.3",
-      "infrastructure_type": "Cloud",
-      "provider": "AWS",
-      "region": "us-east-1",
-      "environment": "Production",
-      "purpose": "App-Server-03",
-      "caption": "AWS-PROD-003"
-    },
-    {
-      "ip": "52.14.210.4",
-      "infrastructure_type": "Cloud",
-      "provider": "AWS",
-      "region": "us-east-1",
+      "provider": "Azure",
+      "region": "westeurope",
       "environment": "Staging",
-      "purpose": "Test-Node-01",
-      "caption": "AWS-STG-001"
+      "purpose": "VPN Gateway - Site-to-Site",
+      "caption": "AZ-VPN-EU-02"
     },
     {
-      "ip": "52.14.210.5",
+      "ip": "20.112.45.130",
       "infrastructure_type": "Cloud",
-      "provider": "AWS",
-      "region": "us-east-1",
+      "provider": "Azure",
+      "region": "westeurope",
       "environment": "Staging",
-      "purpose": "Test-Node-02",
-      "caption": "AWS-STG-002"
+      "purpose": "VPN Gateway - Site-to-Site",
+      "caption": "AZ-VPN-EU-03"
     },
     {
-      "ip": "52.14.210.6",
+      "ip": "3.144.50.10",
       "infrastructure_type": "Cloud",
       "provider": "AWS",
-      "region": "us-east-1",
-      "environment": "Development",
-      "purpose": "Dev-Env-01",
-      "caption": "AWS-DEV-001"
+      "region": "us-east-2",
+      "environment": "Production",
+      "purpose": "Application Gateway",
+      "caption": "AWS-APP-GW-01"
     },
     {
-      "ip": "20.112.45.1",
+      "ip": "3.144.50.11",
+      "infrastructure_type": "Cloud",
+      "provider": "AWS",
+      "region": "us-east-2",
+      "environment": "Production",
+      "purpose": "Application Gateway",
+      "caption": "AWS-APP-GW-02"
+    },
+    {
+      "ip": "13.58.20.100",
+      "infrastructure_type": "Cloud",
+      "provider": "AWS",
+      "region": "us-east-2",
+      "environment": "QA",
+      "purpose": "Test Lab Router",
+      "caption": "AWS-TEST-01"
+    },
+    {
+      "ip": "13.58.20.101",
+      "infrastructure_type": "Cloud",
+      "provider": "AWS",
+      "region": "us-east-2",
+      "environment": "QA",
+      "purpose": "Test Lab Router",
+      "caption": "AWS-TEST-02"
+    },
+    {
+      "ip": "18.191.4.5",
+      "infrastructure_type": "Cloud",
+      "provider": "AWS",
+      "region": "us-east-2",
+      "environment": "Production",
+      "purpose": "Direct Connect Gateway",
+      "caption": "AWS-DX-01"
+    },
+    {
+      "ip": "40.118.12.1",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
       "region": "eastus",
       "environment": "Production",
-      "purpose": "DB-Primary",
-      "caption": "AZ-DB-001"
+      "purpose": "ExpressRoute Gateway",
+      "caption": "AZ-ER-01"
     },
     {
-      "ip": "20.112.45.2",
+      "ip": "40.118.12.2",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
       "region": "eastus",
       "environment": "Production",
-      "purpose": "DB-Replica",
-      "caption": "AZ-DB-002"
+      "purpose": "ExpressRoute Gateway",
+      "caption": "AZ-ER-02"
     },
     {
-      "ip": "20.112.45.3",
+      "ip": "104.45.10.15",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
-      "region": "eastus",
+      "region": "westeurope",
       "environment": "Production",
-      "purpose": "Cache-Server",
-      "caption": "AZ-CACHE-001"
+      "purpose": "Web Application Firewall",
+      "caption": "AZ-WAF-01"
     },
     {
-      "ip": "20.112.45.4",
+      "ip": "104.45.10.16",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
-      "region": "eastus",
+      "region": "westeurope",
+      "environment": "Production",
+      "purpose": "Web Application Firewall",
+      "caption": "AZ-WAF-02"
+    },
+    {
+      "ip": "51.143.2.33",
+      "infrastructure_type": "Cloud",
+      "provider": "Azure",
+      "region": "uksouth",
+      "environment": "Production",
+      "purpose": "Regional Hub Router",
+      "caption": "AZ-UK-HUB"
+    },
+    {
+      "ip": "51.143.2.34",
+      "infrastructure_type": "Cloud",
+      "provider": "Azure",
+      "region": "uksouth",
       "environment": "Staging",
-      "purpose": "UAT-Web",
-      "caption": "AZ-UAT-001"
+      "purpose": "Regional Hub Backup",
+      "caption": "AZ-UK-BKP"
     },
     {
-      "ip": "20.112.45.5",
+      "ip": "35.185.20.5",
       "infrastructure_type": "Cloud",
-      "provider": "Azure",
-      "region": "eastus",
-      "environment": "Development",
-      "purpose": "Sandbox",
-      "caption": "AZ-DEV-005"
-    },
-    {
-      "ip": "35.200.12.1",
-      "infrastructure_type": "Cloud",
-      "provider": "GCP",
-      "region": "asia-east1",
+      "provider": "Google Cloud",
+      "region": "us-central1",
       "environment": "Production",
-      "purpose": "LB-Global",
-      "caption": "GCP-LB-01"
+      "purpose": "Cloud Interconnect",
+      "caption": "GCP-CONN-01"
     },
     {
-      "ip": "35.200.12.2",
+      "ip": "35.185.20.6",
       "infrastructure_type": "Cloud",
-      "provider": "GCP",
-      "region": "asia-east1",
+      "provider": "Google Cloud",
+      "region": "us-central1",
       "environment": "Production",
-      "purpose": "LB-Regional",
-      "caption": "GCP-LB-02"
+      "purpose": "Cloud Interconnect",
+      "caption": "GCP-CONN-02"
     },
     {
-      "ip": "35.200.12.3",
+      "ip": "34.70.1.50",
       "infrastructure_type": "Cloud",
-      "provider": "GCP",
-      "region": "asia-east1",
-      "environment": "Staging",
-      "purpose": "Test-LB",
-      "caption": "GCP-STG-01"
-    },
-    {
-      "ip": "35.200.12.4",
-      "infrastructure_type": "Cloud",
-      "provider": "GCP",
-      "region": "asia-east1",
-      "environment": "Development",
-      "purpose": "Dev-LB",
-      "caption": "GCP-DEV-01"
-    },
-    {
-      "ip": "10.0.0.1",
-      "infrastructure_type": "Cloud",
-      "provider": "Private",
-      "region": "local",
-      "environment": "Production",
-      "purpose": "VPN-Concentrator",
-      "caption": "VPN-001"
-    },
-    {
-      "ip": "10.0.0.2",
-      "infrastructure_type": "Cloud",
-      "provider": "Private",
-      "region": "local",
-      "environment": "Production",
-      "purpose": "VPN-Backup",
-      "caption": "VPN-002"
-    },
-    {
-      "ip": "10.0.0.3",
-      "infrastructure_type": "Cloud",
-      "provider": "Private",
-      "region": "local",
-      "environment": "Staging",
-      "purpose": "VPN-Test",
-      "caption": "VPN-STG-01"
-    },
-    {
-      "ip": "52.14.210.10",
-      "infrastructure_type": "Cloud",
-      "provider": "AWS",
-      "region": "us-west-2",
-      "environment": "Production",
-      "purpose": "Queue-Worker",
-      "caption": "AWS-Q-01"
-    },
-    {
-      "ip": "52.14.210.11",
-      "infrastructure_type": "Cloud",
-      "provider": "AWS",
-      "region": "us-west-2",
-      "environment": "Production",
-      "purpose": "Queue-Worker",
-      "caption": "AWS-Q-02"
-    },
-    {
-      "ip": "52.14.210.12",
-      "infrastructure_type": "Cloud",
-      "provider": "AWS",
-      "region": "us-west-2",
-      "environment": "Production",
-      "purpose": "Queue-Worker",
-      "caption": "AWS-Q-03"
-    },
-    {
-      "ip": "20.112.45.20",
-      "infrastructure_type": "Cloud",
-      "provider": "Azure",
-      "region": "northeurope",
-      "environment": "Production",
-      "purpose": "Auth-Service",
-      "caption": "AZ-AUTH-01"
-    },
-    {
-      "ip": "20.112.45.21",
-      "infrastructure_type": "Cloud",
-      "provider": "Azure",
-      "region": "northeurope",
-      "environment": "Production",
-      "purpose": "Auth-Service",
-      "caption": "AZ-AUTH-02"
-    },
-    {
-      "ip": "35.200.12.20",
-      "infrastructure_type": "Cloud",
-      "provider": "GCP",
+      "provider": "Google Cloud",
       "region": "us-central1",
       "environment": "Development",
-      "purpose": "Data-Pipe",
-      "caption": "GCP-DP-01"
+      "purpose": "SandBox Gateway",
+      "caption": "GCP-SAND-01"
     },
     {
-      "ip": "35.200.12.21",
+      "ip": "34.70.1.51",
       "infrastructure_type": "Cloud",
-      "provider": "GCP",
+      "provider": "Google Cloud",
       "region": "us-central1",
       "environment": "Development",
-      "purpose": "Data-Pipe",
-      "caption": "GCP-DP-02"
+      "purpose": "SandBox Gateway",
+      "caption": "GCP-SAND-02"
     },
     {
-      "ip": "52.14.210.20",
+      "ip": "34.120.5.10",
+      "infrastructure_type": "Cloud",
+      "provider": "Google Cloud",
+      "region": "europe-west1",
+      "environment": "Production",
+      "purpose": "External Load Balancer",
+      "caption": "GCP-ELB-EU"
+    },
+    {
+      "ip": "34.120.5.11",
+      "infrastructure_type": "Cloud",
+      "provider": "Google Cloud",
+      "region": "europe-west1",
+      "environment": "Production",
+      "purpose": "Internal Load Balancer",
+      "caption": "GCP-ILB-EU"
+    },
+    {
+      "ip": "104.198.3.4",
+      "infrastructure_type": "Cloud",
+      "provider": "Google Cloud",
+      "region": "asia-east1",
+      "environment": "Production",
+      "purpose": "Edge Router",
+      "caption": "GCP-EDGE-ASIA"
+    },
+    {
+      "ip": "13.233.1.10",
       "infrastructure_type": "Cloud",
       "provider": "AWS",
-      "region": "eu-central-1",
+      "region": "ap-south-1",
       "environment": "Production",
-      "purpose": "Storage-Gateway",
-      "caption": "AWS-SG-01"
+      "purpose": "Mumbai Hub Router",
+      "caption": "AWS-MUM-01"
     },
     {
-      "ip": "20.112.45.30",
+      "ip": "13.233.1.11",
+      "infrastructure_type": "Cloud",
+      "provider": "AWS",
+      "region": "ap-south-1",
+      "environment": "Production",
+      "purpose": "Mumbai Hub Backup",
+      "caption": "AWS-MUM-02"
+    },
+    {
+      "ip": "15.206.5.20",
+      "infrastructure_type": "Cloud",
+      "provider": "AWS",
+      "region": "ap-south-1",
+      "environment": "QA",
+      "purpose": "Regional QA Bridge",
+      "caption": "AWS-MUM-QA"
+    },
+    {
+      "ip": "15.207.10.5",
+      "infrastructure_type": "Cloud",
+      "provider": "AWS",
+      "region": "ap-south-1",
+      "environment": "Production",
+      "purpose": "Public DNS Gateway",
+      "caption": "AWS-DNS-MUM"
+    },
+    {
+      "ip": "20.203.4.5",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
-      "region": "westus",
+      "region": "centralindia",
       "environment": "Production",
-      "purpose": "Compute-Node",
-      "caption": "AZ-COMP-01"
+      "purpose": "Main VNet Gateway",
+      "caption": "AZ-IND-01"
     },
     {
-      "ip": "20.112.45.31",
+      "ip": "20.203.4.6",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
-      "region": "westus",
+      "region": "centralindia",
       "environment": "Production",
-      "purpose": "Compute-Node",
-      "caption": "AZ-COMP-02"
+      "purpose": "Secondary VNet Gateway",
+      "caption": "AZ-IND-02"
     },
     {
-      "ip": "35.200.12.30",
+      "ip": "20.191.1.80",
       "infrastructure_type": "Cloud",
-      "provider": "GCP",
-      "region": "europe-west1",
+      "provider": "Azure",
+      "region": "australiaeast",
       "environment": "Production",
-      "purpose": "Edge-Cache",
-      "caption": "GCP-EC-01"
+      "purpose": "Sydney Edge Firewall",
+      "caption": "AZ-SYD-FW"
     },
     {
-      "ip": "35.200.12.31",
+      "ip": "20.191.1.81",
       "infrastructure_type": "Cloud",
-      "provider": "GCP",
-      "region": "europe-west1",
+      "provider": "Azure",
+      "region": "australiaeast",
       "environment": "Production",
-      "purpose": "Edge-Cache",
-      "caption": "GCP-EC-02"
+      "purpose": "Sydney Traffic Manager",
+      "caption": "AZ-SYD-TM"
+    },
+    {
+      "ip": "13.239.5.12",
+      "infrastructure_type": "Cloud",
+      "provider": "AWS",
+      "region": "ap-southeast-2",
+      "environment": "Production",
+      "purpose": "Regional Proxy",
+      "caption": "AWS-SYD-PRX"
     }
   ],
   "aruba": [
     {
-      "ip": "198.51.100.1",
+      "ip": "198.51.100.42",
       "infrastructure_type": "Datacenter",
-      "provider": "Equinix",
-      "region": "CH3",
+      "provider": "Equinix-Colocation",
+      "region": "Chicago-CH3",
       "environment": "Production",
-      "purpose": "Core-Switch",
-      "caption": "DC-CORE-01"
+      "purpose": "Primary Edge Firewall",
+      "caption": "DC-FW-01-PRI"
     },
     {
-      "ip": "198.51.100.2",
-      "infrastructure_type": "Datacenter",
-      "provider": "Equinix",
-      "region": "CH3",
-      "environment": "Production",
-      "purpose": "Core-Switch",
-      "caption": "DC-CORE-02"
-    },
-    {
-      "ip": "198.51.100.3",
-      "infrastructure_type": "Datacenter",
-      "provider": "Equinix",
-      "region": "CH3",
-      "environment": "Production",
-      "purpose": "Dist-Switch",
-      "caption": "DC-DIST-01"
-    },
-    {
-      "ip": "198.51.100.4",
-      "infrastructure_type": "Datacenter",
-      "provider": "Equinix",
-      "region": "CH3",
-      "environment": "Staging",
-      "purpose": "Test-Switch",
-      "caption": "DC-STG-01"
-    },
-    {
-      "ip": "203.0.113.10",
+      "ip": "203.0.113.5",
       "infrastructure_type": "Hybrid",
-      "provider": "Direct-Connect",
+      "provider": "On-Prem / AWS Direct Connect",
       "region": "us-west-1",
       "environment": "Production",
-      "purpose": "Edge-Router",
-      "caption": "HYB-RTR-01"
+      "purpose": "Direct Connect Egress Router",
+      "caption": "HYB-DX-001"
     },
     {
-      "ip": "203.0.113.11",
-      "infrastructure_type": "Hybrid",
-      "provider": "Direct-Connect",
-      "region": "us-west-1",
-      "environment": "Production",
-      "purpose": "Edge-Router",
-      "caption": "HYB-RTR-02"
-    },
-    {
-      "ip": "203.0.113.12",
-      "infrastructure_type": "Hybrid",
-      "provider": "Direct-Connect",
-      "region": "us-west-1",
-      "environment": "Staging",
-      "purpose": "Edge-Test",
-      "caption": "HYB-STG-01"
-    },
-    {
-      "ip": "192.168.1.1",
-      "infrastructure_type": "Datacenter",
-      "provider": "On-Prem",
-      "region": "HQ",
-      "environment": "Production",
-      "purpose": "Firewall",
-      "caption": "HQ-FW-01"
-    },
-    {
-      "ip": "192.168.1.2",
-      "infrastructure_type": "Datacenter",
-      "provider": "On-Prem",
-      "region": "HQ",
-      "environment": "Production",
-      "purpose": "Firewall",
-      "caption": "HQ-FW-02"
-    },
-    {
-      "ip": "192.168.1.5",
-      "infrastructure_type": "Datacenter",
-      "provider": "On-Prem",
-      "region": "HQ",
+      "ip": "35.200.12.99",
+      "infrastructure_type": "Cloud",
+      "provider": "Google Cloud",
+      "region": "asia-northeast1",
       "environment": "Development",
-      "purpose": "Lab-FW",
-      "caption": "HQ-LAB-01"
+      "purpose": "NAT Gateway",
+      "caption": "GCP-NAT-DEV"
     },
     {
-      "ip": "198.51.100.20",
+      "ip": "45.79.10.1",
       "infrastructure_type": "Datacenter",
-      "provider": "Equinix",
-      "region": "NY4",
+      "provider": "Linode",
+      "region": "us-central",
       "environment": "Production",
-      "purpose": "Storage-Array",
-      "caption": "DC-NAS-01"
+      "purpose": "Public Core Switch",
+      "caption": "DAL-CORE-01"
     },
     {
-      "ip": "198.51.100.21",
+      "ip": "45.79.10.2",
       "infrastructure_type": "Datacenter",
-      "provider": "Equinix",
-      "region": "NY4",
+      "provider": "Linode",
+      "region": "us-central",
       "environment": "Production",
-      "purpose": "Storage-Array",
-      "caption": "DC-NAS-02"
+      "purpose": "Public Core Switch",
+      "caption": "DAL-CORE-02"
     },
     {
-      "ip": "203.0.113.30",
+      "ip": "66.228.40.10",
+      "infrastructure_type": "Datacenter",
+      "provider": "Akamai",
+      "region": "eu-central",
+      "environment": "Production",
+      "purpose": "Global Distribution Switch",
+      "caption": "LDN-DIST-01"
+    },
+    {
+      "ip": "66.228.40.11",
+      "infrastructure_type": "Datacenter",
+      "provider": "Akamai",
+      "region": "eu-central",
+      "environment": "Production",
+      "purpose": "Global Distribution Switch",
+      "caption": "LDN-DIST-02"
+    },
+    {
+      "ip": "139.162.5.20",
+      "infrastructure_type": "Datacenter",
+      "provider": "Akamai",
+      "region": "eu-central",
+      "environment": "Production",
+      "purpose": "External Storage Fabric",
+      "caption": "LDN-SAN-01"
+    },
+    {
+      "ip": "139.162.5.21",
+      "infrastructure_type": "Datacenter",
+      "provider": "Akamai",
+      "region": "eu-central",
+      "environment": "Production",
+      "purpose": "External Storage Fabric",
+      "caption": "LDN-SAN-02"
+    },
+    {
+      "ip": "93.184.216.34",
       "infrastructure_type": "Hybrid",
-      "provider": "Site-to-Site",
-      "region": "Remote-Branch",
+      "provider": "On-Prem / Azure ExpressRoute",
+      "region": "eastus",
       "environment": "Production",
-      "purpose": "Gateway",
-      "caption": "BR-GTW-01"
+      "purpose": "Hybrid Cloud Gateway",
+      "caption": "HYB-ER-US"
     },
     {
-      "ip": "203.0.113.31",
+      "ip": "93.184.216.35",
       "infrastructure_type": "Hybrid",
-      "provider": "Site-to-Site",
-      "region": "Remote-Branch",
+      "provider": "On-Prem / Azure ExpressRoute",
+      "region": "eastus",
       "environment": "Production",
-      "purpose": "Gateway",
-      "caption": "BR-GTW-02"
+      "purpose": "Hybrid Cloud Gateway",
+      "caption": "HYB-ER-US-BKP"
     },
     {
-      "ip": "192.168.2.10",
+      "ip": "192.0.2.14",
       "infrastructure_type": "Datacenter",
-      "provider": "On-Prem",
-      "region": "DR-Site",
+      "provider": "Digital Realty",
+      "region": "Singapore-SG1",
+      "environment": "Production",
+      "purpose": "BGP Edge Router",
+      "caption": "SG-BGP-01"
+    },
+    {
+      "ip": "192.0.2.15",
+      "infrastructure_type": "Datacenter",
+      "provider": "Digital Realty",
+      "region": "Singapore-SG1",
+      "environment": "Production",
+      "purpose": "BGP Edge Router",
+      "caption": "SG-BGP-02"
+    },
+    {
+      "ip": "192.0.2.30",
+      "infrastructure_type": "Datacenter",
+      "provider": "Digital Realty",
+      "region": "Singapore-SG1",
       "environment": "Staging",
-      "purpose": "DR-Controller",
-      "caption": "DR-CTL-01"
+      "purpose": "Test Access Point",
+      "caption": "SG-TAP-01"
     },
     {
-      "ip": "192.168.2.11",
+      "ip": "103.21.244.1",
       "infrastructure_type": "Datacenter",
-      "provider": "On-Prem",
-      "region": "DR-Site",
-      "environment": "Staging",
-      "purpose": "DR-Controller",
-      "caption": "DR-CTL-02"
-    },
-    {
-      "ip": "198.51.100.50",
-      "infrastructure_type": "Datacenter",
-      "provider": "Equinix",
-      "region": "CH3",
+      "provider": "Cloudflare",
+      "region": "Tokyo-TYO2",
       "environment": "Production",
-      "purpose": "Monitor-Node",
-      "caption": "DC-MON-01"
+      "purpose": "Edge WiFi Controller",
+      "caption": "TYO-WLC-01"
     },
     {
-      "ip": "198.51.100.51",
+      "ip": "103.21.244.2",
       "infrastructure_type": "Datacenter",
-      "provider": "Equinix",
-      "region": "CH3",
+      "provider": "Cloudflare",
+      "region": "Tokyo-TYO2",
       "environment": "Production",
-      "purpose": "Monitor-Node",
-      "caption": "DC-MON-02"
+      "purpose": "Edge WiFi Controller",
+      "caption": "TYO-WLC-02"
     },
     {
-      "ip": "203.0.113.40",
+      "ip": "103.22.200.10",
+      "infrastructure_type": "Datacenter",
+      "provider": "Cloudflare",
+      "region": "Tokyo-TYO2",
+      "environment": "Production",
+      "purpose": "L3 Access Switch",
+      "caption": "TYO-ACC-01"
+    },
+    {
+      "ip": "103.22.200.11",
+      "infrastructure_type": "Datacenter",
+      "provider": "Cloudflare",
+      "region": "Tokyo-TYO2",
+      "environment": "Production",
+      "purpose": "L3 Access Switch",
+      "caption": "TYO-ACC-02"
+    },
+    {
+      "ip": "103.22.200.12",
+      "infrastructure_type": "Datacenter",
+      "provider": "Cloudflare",
+      "region": "Tokyo-TYO2",
+      "environment": "Production",
+      "purpose": "L3 Access Switch",
+      "caption": "TYO-ACC-03"
+    },
+    {
+      "ip": "172.67.73.1",
+      "infrastructure_type": "Datacenter",
+      "provider": "Cloudflare",
+      "region": "Sydney-SY4",
+      "environment": "Production",
+      "purpose": "Regional Firewall Pair",
+      "caption": "SYD-FW-01"
+    },
+    {
+      "ip": "172.67.73.2",
+      "infrastructure_type": "Datacenter",
+      "provider": "Cloudflare",
+      "region": "Sydney-SY4",
+      "environment": "Production",
+      "purpose": "Regional Firewall Pair",
+      "caption": "SYD-FW-02"
+    },
+    {
+      "ip": "104.21.40.10",
+      "infrastructure_type": "Datacenter",
+      "provider": "Cloudflare",
+      "region": "Sydney-SY4",
+      "environment": "Production",
+      "purpose": "Management Jump-Box",
+      "caption": "SYD-JMP-01"
+    },
+    {
+      "ip": "185.199.108.153",
       "infrastructure_type": "Hybrid",
-      "provider": "Direct-Connect",
-      "region": "us-east-2",
+      "provider": "On-Prem",
+      "region": "Berlin-BE1",
       "environment": "Production",
-      "purpose": "WAN-Opt",
-      "caption": "HYB-WAN-01"
+      "purpose": "Local Site Gateway",
+      "caption": "BER-GW-01"
     },
     {
-      "ip": "203.0.113.41",
+      "ip": "185.199.109.153",
       "infrastructure_type": "Hybrid",
-      "provider": "Direct-Connect",
-      "region": "us-east-2",
+      "provider": "On-Prem",
+      "region": "Berlin-BE1",
       "environment": "Production",
-      "purpose": "WAN-Opt",
-      "caption": "HYB-WAN-02"
+      "purpose": "Local Site Gateway",
+      "caption": "BER-GW-02"
     },
     {
-      "ip": "192.168.3.1",
+      "ip": "185.199.110.153",
       "infrastructure_type": "Datacenter",
       "provider": "On-Prem",
-      "region": "HQ",
+      "region": "Berlin-BE1",
       "environment": "Production",
-      "purpose": "Access-Switch",
-      "caption": "HQ-ACC-01"
+      "purpose": "Internal DMZ Switch",
+      "caption": "BER-DMZ-01"
     },
     {
-      "ip": "192.168.3.2",
+      "ip": "185.199.111.153",
       "infrastructure_type": "Datacenter",
       "provider": "On-Prem",
-      "region": "HQ",
+      "region": "Berlin-BE1",
       "environment": "Production",
-      "purpose": "Access-Switch",
-      "caption": "HQ-ACC-02"
+      "purpose": "Internal DMZ Switch",
+      "caption": "BER-DMZ-02"
     },
     {
-      "ip": "198.51.100.60",
+      "ip": "140.82.121.3",
       "infrastructure_type": "Datacenter",
-      "provider": "Equinix",
-      "region": "CH3",
+      "provider": "GitHub-Colo",
+      "region": "Berlin-BE1",
       "environment": "Development",
-      "purpose": "Dev-Controller",
-      "caption": "DC-DEV-01"
+      "purpose": "Dev Ops Switch",
+      "caption": "BER-DEV-01"
     },
     {
-      "ip": "203.0.113.50",
-      "infrastructure_type": "Hybrid",
-      "provider": "VPN",
-      "region": "Remote-Branch",
-      "environment": "Production",
-      "purpose": "Client-VPN",
-      "caption": "BR-VPN-01"
-    },
-    {
-      "ip": "192.168.4.10",
+      "ip": "140.82.121.4",
       "infrastructure_type": "Datacenter",
-      "provider": "On-Prem",
-      "region": "HQ",
+      "provider": "GitHub-Colo",
+      "region": "Udaipur-UD1",
       "environment": "Production",
-      "purpose": "Server-Rack-A",
-      "caption": "HQ-RACK-01"
+      "purpose": "Heritage Site Router",
+      "caption": "UD-RTR-01"
     },
     {
-      "ip": "192.168.4.11",
+      "ip": "140.82.121.5",
       "infrastructure_type": "Datacenter",
-      "provider": "On-Prem",
-      "region": "HQ",
+      "provider": "GitHub-Colo",
+      "region": "Udaipur-UD1",
       "environment": "Production",
-      "purpose": "Server-Rack-B",
-      "caption": "HQ-RACK-02"
+      "purpose": "Heritage Site Backup",
+      "caption": "UD-RTR-02"
     },
     {
-      "ip": "198.51.100.70",
+      "ip": "140.82.121.6",
       "infrastructure_type": "Datacenter",
-      "provider": "Equinix",
-      "region": "CH3",
+      "provider": "GitHub-Colo",
+      "region": "Udaipur-UD1",
       "environment": "Production",
-      "purpose": "Security-Appliance",
-      "caption": "DC-SEC-01"
-    },
-    {
-      "ip": "203.0.113.60",
-      "infrastructure_type": "Hybrid",
-      "provider": "MPLS",
-      "region": "Global",
-      "environment": "Production",
-      "purpose": "Traffic-Shaper",
-      "caption": "HYB-MPLS-01"
-    },
-    {
-      "ip": "192.168.5.1",
-      "infrastructure_type": "Datacenter",
-      "provider": "On-Prem",
-      "region": "HQ",
-      "environment": "Development",
-      "purpose": "Sandbox-Switch",
-      "caption": "HQ-DEV-02"
-    },
-    {
-      "ip": "198.51.100.80",
-      "infrastructure_type": "Datacenter",
-      "provider": "Equinix",
-      "region": "CH3",
-      "environment": "Production",
-      "purpose": "NTP-Server",
-      "caption": "DC-NTP-01"
+      "purpose": "Visitor WiFi Edge",
+      "caption": "UD-WIFI-01"
     }
   ]
 }
