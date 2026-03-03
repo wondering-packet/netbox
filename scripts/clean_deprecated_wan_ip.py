@@ -64,8 +64,8 @@ for each_ip in nb.ipam.ip_addresses.filter(
         each_ip.custom_fields["last_seen"], str(each_ip.address).strip())
     tags = each_ip.tags
 
-    print("-----------------------------------------------------")
     if last_seen_days is None:
+        print("-----------------------------------------------------")
         print(
             f"{address} -- Age: UNKNOWN days -- Action: Requires review (last seen missing)")
         existing_slugs = []
@@ -87,6 +87,7 @@ for each_ip in nb.ipam.ip_addresses.filter(
         })
         records_processed_b += 1
     elif last_seen_days >= 90:
+        print("-----------------------------------------------------")
         each_ip.delete()
         print(
             f"{address} -- Age: {last_seen_days} days -- Action: Deleted")
