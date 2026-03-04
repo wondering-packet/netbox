@@ -14,7 +14,7 @@ flowchart TD
     end
 
     %% CI
-    DataFile -->|Webhook Trigger| Jenkins[Jenkins CI Server]
+    DataFile -->|Commit (change) triggers a webhook| Jenkins[Jenkins CI Server]
     Pipelines -.->|Pull Config| Jenkins
     Scripts -.->|Execute Logic| Jenkins
 
