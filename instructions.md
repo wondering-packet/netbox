@@ -1,27 +1,47 @@
 # Jenkins + Git + NetBox + SMB Artifacts Architecture
 
 ```mermaid
-flowchart LR
+flowchart TD
+    %% Actor
+    Dev([Developer Push]) --> DataFile
 
-  Dev[Developer Push] --> Git
+    subgraph Git_Repo [Git Repository]
+        direction TB
+        DataFile[data/wan_ips.json]
+        Pipelines[Jenkins Pipelines]
+        Scripts[Python Scripts]
+    end
 
-  subgraph Git[Git Repository]
-    Pipelines[Jenkins Pipelines]
-    Scripts[Python Scripts]
-    DataFile[data/wan_ip.json]
-  end
+    %% Trigger Sequence - Fixed Labels
+    DataFile -->|"Webhook Trigger"| Jenkins[Jenkins CI Server]
+    Pipelines -.->|"Pull Config"| Jenkins
+    Scripts -.->|"Execute Logic"| Jenkins
 
-  Git -->|Jenkins pulls pipelines and scripts| Jenkins[Jenkins CI Server]
+    subgraph Automation [CI/CD]
+        direction LR
+        Jenkins --> Reconcile[Run Reconcile Pipeline]
+        Jenkins --> Cleanup[Weekly Cleanup]
+        Jenkins --> Maint[Weekly Maintenance]
+    end
 
-  Jenkins -->|API calls| NetBox[NetBox Instance]
-  Jenkins -->|Stores build artifacts| SMB[Remote SMB Share]
+    subgraph Systems [External Systems]
+        direction TB
+        NetBox[(NetBox Instance)]
+        SMB[Remote SMB Share]
+    end
 
-  DataFile -->|File change triggers| Reconcile[Reconcile Pipeline Build]
-  Reconcile --> Jenkins
+    %% Connections
+    Reconcile --> NetBox
+    Cleanup --> NetBox
+    
+    Reconcile --> SMB
+    Cleanup --> SMB
+    Maint --> SMB
 
-  Cleanup[Weekly Cleanup Trigger] --> Jenkins
-  Maintenance[Weekly Maintenance Trigger] --> Jenkins
-
+    %% Styling
+    style DataFile fill:#f9f,stroke:#333
+    style Reconcile fill:#dfd,stroke:#333
+    style Jenkins fill:#fff,stroke:#333
 ```
 
 # WAN IP Ingestion, Cleanup & Storage maintenance
@@ -137,8 +157,11 @@ A new working dictionary is built from **Dataset A**, containing only fields rel
 Create these in NetBox before the workflow goes live.
 
 - **Tags**
-  - `External SoT GitHub`
-  - `Review-Required`
+  - Tag name: `External SoT GitHub`, tag slug: `external-sot-github`
+  - Tag name: `Review-Required`, tag slug: `review-required`
+
+> Note that tag slugs are actually what are used in the backend. Tag names are for display only in Netbox.
+
 - **Custom Field**
   - `last_seen` – Timestamp of when the IP was last observed in Dataset A.
 
