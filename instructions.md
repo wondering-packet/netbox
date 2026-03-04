@@ -5,26 +5,33 @@ flowchart TD
     %% Actor
     Dev([Developer Push]) --> DataFile
 
-    subgraph Git_Repo [Git Repository]
+    %% Git Repo
+    subgraph Git_Repo[Git Repository]
         direction TB
         DataFile[data/wan_ips.json]
         Pipelines[Jenkins Pipelines]
         Scripts[Python Scripts]
     end
 
-    %% Trigger Sequence - Fixed Labels
-    DataFile -->|"Webhook Trigger"| Jenkins[Jenkins CI Server]
-    Pipelines -.->|"Pull Config"| Jenkins
-    Scripts -.->|"Execute Logic"| Jenkins
+    %% CI
+    DataFile -->|Webhook Trigger| Jenkins[Jenkins CI Server]
+    Pipelines -.->|Pull Config| Jenkins
+    Scripts -.->|Execute Logic| Jenkins
 
-    subgraph Automation [CI/CD]
-        direction LR
-        Jenkins --> Reconcile[Run Reconcile Pipeline]
-        Jenkins --> Cleanup[Weekly Cleanup]
-        Jenkins --> Maint[Weekly Maintenance]
+    %% Automation
+    subgraph Automation[Automation Logic]
+        direction TB
+        Reconcile[Run Reconcile Pipeline]
+        Cleanup[Weekly Cleanup]
+        Maint[Weekly Maintenance]
     end
 
-    subgraph Systems [External Systems]
+    Jenkins --> Reconcile
+    Jenkins --> Cleanup
+    Jenkins --> Maint
+
+    %% External Systems
+    subgraph Systems[External Systems]
         direction TB
         NetBox[(NetBox Instance)]
         SMB[Remote SMB Share]
@@ -33,15 +40,23 @@ flowchart TD
     %% Connections
     Reconcile --> NetBox
     Cleanup --> NetBox
-    
+
     Reconcile --> SMB
     Cleanup --> SMB
     Maint --> SMB
 
-    %% Styling
-    style DataFile fill:#f9f,stroke:#333
-    style Reconcile fill:#dfd,stroke:#333
-    style Jenkins fill:#fff,stroke:#333
+    %% Styling (GitHub readable)
+    style Dev fill:#bbdefb,stroke:#1e88e5,stroke-width:2px,color:#000
+    style DataFile fill:#ffe082,stroke:#f57f17,stroke-width:2px,color:#000
+
+    style Jenkins fill:#ffcc80,stroke:#ef6c00,stroke-width:2px,color:#000
+
+    style Reconcile fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px,color:#000
+    style Cleanup fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px,color:#000
+    style Maint fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px,color:#000
+
+    style NetBox fill:#d1c4e9,stroke:#5e35b1,stroke-width:2px,color:#000
+    style SMB fill:#d1c4e9,stroke:#5e35b1,stroke-width:2px,color:#000
 ```
 
 # WAN IP Ingestion, Cleanup & Storage maintenance
