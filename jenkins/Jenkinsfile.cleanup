@@ -13,10 +13,10 @@ pipeline {
       }
     }
     // setting up python & the venv.
-    stage('Setup python venv'){
+    stage('Setup python venv') {
         steps {
           // 'sh' is our linux bash command runner. label is just an identifier for the step.
-          sh (label: 'setup-venv', script: '''#!/bin/bash
+          sh(label: 'setup-venv', script: '''#!/bin/bash
 
           set -euo pipefail # this is a common set of bash options to make the script more robust. it means:
                           # -e: exit immediately if a command exits with a non-zero status.
@@ -57,7 +57,7 @@ pipeline {
             RUN_ID = "${env.BUILD_ID}"  // using jenkins build id in scripts later for logging/tracking.
         }
         steps {
-            sh (label: 'connectinvity test + cleanup', script: '''#!/bin/bash
+            sh(label: 'connectinvity test + cleanup', script: '''#!/bin/bash
             set -euo pipefail
             . .netbox-venv/bin/activate
             echo "\nStep 1: Running netbox connectivity test script"
@@ -69,62 +69,44 @@ pipeline {
             )
         }
     }
-/*
-    stage('Artifacts Offloading') {
-        environment {
-            RUN_ID = "${env.BUILD_ID}"
-        }
-        steps {
-            sh (label: 'Offloading artifacts to jenkins smb share', script: '''#!/bin/bash
-            set -euo pipefail
-            DEST="/mnt/jenkins-artifacts/${JOB_NAME}/${RUN_ID}"
-            mkdir -p "$DEST"
-            [ -d "artifacts-cleanup/${RUN_ID}" ] && rsync -a "artifacts-cleanup/${RUN_ID}/" "$DEST/"
 
-            echo "Artifacts offloaded to $DEST. Contents:"
-            ls -R "$DEST"
-            '''
-            )
-        }
-    }
-  }
-    */
     stage('SMB offload prep') {
-  environment {
-    RUN_ID = "${env.BUILD_ID}"
-    SMB_CREDS = credentials('jenkins-artifacts-smb')
-    SMB_SERVER = 'dc-01.intra.wonderingpacket.com'
-    SMB_SHARE  = 'jenkins-artifacts'
-  }
+      environment {
+        RUN_ID = "${env.BUILD_ID}"
+        SMB_CREDS = credentials('jenkins-artifacts-smb')
+        SMB_SERVER = 'dc-01.intra.wonderingpacket.com'
+        SMB_SHARE  = 'jenkins-artifacts'
+      }
 
-  steps {
-    sh (label: 'Offloading artifacts to jenkins smb share', script: '''#!/bin/bash
-      set -euo pipefail
+      steps {
+        sh(label: 'Offloading artifacts to jenkins smb share', script: '''#!/bin/bash
+          set -euo pipefail
 
-      LOCAL_DIR="artifacts-cleanup/${RUN_ID}"
+          LOCAL_DIR="artifacts-cleanup/${RUN_ID}"
 
-      if [ ! -d "$LOCAL_DIR" ]; then
-        echo "ERROR: Local directory not found: $LOCAL_DIR"
-        exit 1
-      fi
+          if [ ! -d "$LOCAL_DIR" ]; then
+            echo "ERROR: Local directory not found: $LOCAL_DIR"
+            exit 1
+          fi
 
-      smbclient "//$SMB_SERVER/$SMB_SHARE" \
-        -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
-        -c 'ls'
+          smbclient "//$SMB_SERVER/$SMB_SHARE" \
+            -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
+            -c 'ls'
 
-      smbclient "//$SMB_SERVER/$SMB_SHARE" \
-        -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
-        -c "mkdir ${JOB_NAME}; cd ${JOB_NAME}; mkdir ${RUN_ID}; ls"
+          smbclient "//$SMB_SERVER/$SMB_SHARE" \
+            -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
+            -c "mkdir ${JOB_NAME}; cd ${JOB_NAME}; mkdir ${RUN_ID}; ls"
 
-      echo "SUCCESS: SMB checks passed and remote path created."
-    ''')
-  }
+          echo "SUCCESS: SMB checks passed and remote path created."
+        ''')
+      }
     }
 
-  post {
-    always {
-      // cleaning up the workspace
-      cleanWs()
+    post {
+      always {
+        // cleaning up the workspace
+        cleanWs()
+      }
     }
   }
 }
