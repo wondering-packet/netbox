@@ -73,8 +73,6 @@ pipeline {
     stage('SMB Upload Artifacts') {
       environment {
         RUN_ID = "${env.BUILD_ID}"
-
-        // Jenkins credential of type: Username with password
         SMB_CREDS = credentials('jenkins-artifacts-smb')
 
         SMB_SERVER = 'dc-01.intra.wonderingpacket.com'
@@ -87,6 +85,9 @@ pipeline {
           set -euo pipefail
 
           LOCAL_DIR="artifacts-cleanup/${RUN_ID}"
+          REMOTE_JOB="${JOB_NAME}"
+          REMOTE_BRANCH="${BRANCH_NAME:-main}"
+          REMOTE_RUN="${RUN_ID}"
 
           echo "Step 1: Verify local artifact directory exists"
           if [ ! -d "$LOCAL_DIR" ]; then
@@ -103,24 +104,40 @@ pipeline {
           echo "Artifacts found locally:"
           ls -la "$LOCAL_DIR"
 
-          echo "Step 3: Upload artifacts to SMB path: ${SMB_BASE}/${JOB_NAME}/${RUN_ID}"
+          echo "Step 3: Ensure remote SMB path exists and upload artifacts"
+          echo "Remote path: ${SMB_BASE}/${REMOTE_JOB}/${REMOTE_BRANCH}/${REMOTE_RUN}"
+
+          SMB_OUTPUT=$(mktemp)
+
           smbclient "//$SMB_SERVER/$SMB_SHARE" \
             -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
             -c "
               cd ${SMB_BASE};
-              cd ${JOB_NAME};
-              cd ${RUN_ID};
+              mkdir ${REMOTE_JOB};
+              cd ${REMOTE_JOB};
+              mkdir ${REMOTE_BRANCH};
+              cd ${REMOTE_BRANCH};
+              mkdir ${REMOTE_RUN};
+              cd ${REMOTE_RUN};
               lcd ${LOCAL_DIR};
               prompt OFF;
               recurse ON;
               mput *
-            "
+            " | tee "$SMB_OUTPUT"
 
-          echo "SUCCESS: Artifacts uploaded to SMB."
+          echo "Step 4: Check for SMB errors"
+          if grep -q 'NT_STATUS' "$SMB_OUTPUT"; then
+            echo "ERROR: smbclient reported an SMB error."
+            rm -f "$SMB_OUTPUT"
+            exit 1
+          fi
+
+          rm -f "$SMB_OUTPUT"
+          echo "SUCCESS: Artifacts uploaded to ${SMB_BASE}/${REMOTE_JOB}/${REMOTE_BRANCH}/${REMOTE_RUN}"
         ''')
       }
     }
-  }
+      }
 
   post {
     always {
