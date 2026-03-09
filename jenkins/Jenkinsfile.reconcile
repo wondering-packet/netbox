@@ -79,6 +79,7 @@ pipeline {
         SMB_SHARE  = 'jenkins-artifacts'
         SMB_BASE   = 'netbox'
         LOCAL_DIR  = 'artifacts'
+        REMOTE_BRANCH = "${env.BRANCH_NAME}"
       }
 
       steps {
@@ -90,7 +91,7 @@ pipeline {
           # Multibranch job example:
           # JOB_NAME="Netbox_Git_WAN_IP_Reconcilation/main"
           JOB_ROOT="${JOB_NAME%%/*}"
-          REMOTE_BRANCH="${JOB_NAME#*/}"; REMOTE_BRANCH="${REMOTE_BRANCH//\\//-}"
+
           REMOTE_RUN="${RUN_ID}"
 
           echo "Step 1: Verify local artifact directory exists & is not empty"
