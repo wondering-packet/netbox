@@ -91,13 +91,21 @@ pipeline {
           # Multibranch job example:
           # JOB_NAME="Netbox_Git_WAN_IP_Reconcilation/main"
           JOB_ROOT="${JOB_NAME%%/*}"
+          echo "Job Name: ${JOB_NAME}"
 
           REMOTE_RUN="${RUN_ID}"
 
-          SAFE_REMOTE_BRANCH=$(echo "$REMOTE_BRANCH" | sed 's|/|-|g')
+          # Check if the branch contains a slash (feature branches usually do)
+          if [[ "$REMOTE_BRANCH" == *"/"* ]]; then
 
-          echo "REMOTE_BRANCH=$REMOTE_BRANCH"
-          echo "SAFE_REMOTE_BRANCH=$SAFE_REMOTE_BRANCH"
+            # Replace "/" with "-" so the branch name becomes filesystem-safe
+            # Example: feature/vipin-dev-2 -> feature-vipin-dev-2
+            SAFE_REMOTE_BRANCH=$(echo "$REMOTE_BRANCH" | sed 's|/|-|g')
+
+            # Print the sanitized branch name (for debugging / logs)
+            echo "Sanitized branch name for SMB: $SAFE_REMOTE_BRANCH"
+
+          fi
 
           echo "Step 1: Verify local artifact directory exists & is not empty"
           if [ ! -d "$LOCAL_DIR" ]; then
