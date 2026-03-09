@@ -50,13 +50,6 @@ pipeline {
     }
     // next stage. running scripts here.
     stage('Reconcilation') {
-        when {
-          beforeAgent true
-          allOf {
-              branch 'main'
-              changeset pattern: 'data/wan_ips.json', comparator: 'EQUALS'
-          }
-        }
         environment {
             // setting env variables for this stage. we will use these in the script.
             NETBOX_URL = credentials('NETBOX_URL')
@@ -78,13 +71,6 @@ pipeline {
     }
 
     stage('SMB Upload Artifacts') {
-      when {
-          beforeAgent true
-          allOf {
-              branch 'main'
-              changeset pattern: 'data/wan_ips.json', comparator: 'EQUALS'
-          }
-      }
       environment {
         RUN_ID = "${env.BUILD_ID}"
         SMB_CREDS = credentials('jenkins-artifacts-smb')
