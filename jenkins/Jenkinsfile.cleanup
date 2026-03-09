@@ -101,7 +101,7 @@ pipeline {
         ''')
       }
     }
-
+  }
     post {
       always {
         // cleaning up the workspace
@@ -109,4 +109,3 @@ pipeline {
       }
     }
   }
-}
