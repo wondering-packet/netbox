@@ -1,4 +1,13 @@
 // bash is new to me. just adding a few comments for easier understanding. code is generated with the help of chatgpt.
+// This pipeline is intended to execute for the `main` branch only.
+// Stage execution is controlled using `when` conditions within the pipeline.
+//
+// The "Basic Branch Build Strategies" plugin is configured to monitor the
+// `main` branch. When a new commit is pushed to `main`, Jenkins triggers
+// a pipeline run.
+//
+// During execution, `when` conditions ensure that the reconciliation logic
+// only runs if the commit includes changes to the WAN IP data file.
 
 pipeline {
     agent {
