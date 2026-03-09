@@ -78,13 +78,14 @@ pipeline {
         SMB_SERVER = 'dc-01.intra.wonderingpacket.com'
         SMB_SHARE  = 'jenkins-artifacts'
         SMB_BASE   = 'netbox'
+        LOCAL_DIR  = 'artifacts-cleanup'
       }
 
       steps {
         sh(label: 'upload artifacts to SMB', script: '''#!/bin/bash
           set -euo pipefail
 
-          LOCAL_DIR="artifacts-cleanup/${RUN_ID}"
+          LOCAL_DIR="${LOCAL_DIR}/${RUN_ID}"
 
           REMOTE_RUN="${RUN_ID}"
 
