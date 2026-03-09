@@ -106,7 +106,7 @@ pipeline {
           ls -la "$LOCAL_DIR"
 
           echo "Step 2: Artifacts will be uploaded here"
-          echo "Remote path: ${SMB_BASE}/${JOB_ROOT}/${REMOTE_BRANCH}/${REMOTE_RUN}"
+          echo "Remote path: //${SMB_SERVER}/${SMB_BASE}/${JOB_ROOT}/${REMOTE_BRANCH}/${REMOTE_RUN}"
 
           SMB_OUTPUT=$(mktemp)
 
@@ -134,9 +134,9 @@ pipeline {
             rm -f "$SMB_OUTPUT"
             exit 1
           fi
-
+          echo "INFO: SMB upload completed without critical errors."
           rm -f "$SMB_OUTPUT"
-          echo "SUCCESS: Artifacts uploaded to ${SMB_BASE}/${JOB_ROOT}/${REMOTE_BRANCH}/${REMOTE_RUN}"
+          echo "SUCCESS: Artifacts uploaded to //${SMB_SERVER}/${SMB_BASE}/${JOB_ROOT}/${REMOTE_BRANCH}/${REMOTE_RUN}"
         ''')
       }
     }
