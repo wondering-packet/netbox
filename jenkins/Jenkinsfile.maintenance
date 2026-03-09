@@ -35,7 +35,7 @@ pipeline {
           --server "$SMB_SERVER" \
           --share "$SMB_SHARE" \
           --base "$SMB_BASE" \
-          --keep 200 \
+          --keep 2 \
           --username "$SMB_CREDS_USR" \
           --password "$SMB_CREDS_PSW"
         '''
