@@ -94,6 +94,11 @@ pipeline {
 
           REMOTE_RUN="${RUN_ID}"
 
+          SAFE_REMOTE_BRANCH="${REMOTE_BRANCH//\//-}"
+
+          echo "REMOTE_BRANCH=$REMOTE_BRANCH"
+          echo "SAFE_REMOTE_BRANCH=$SAFE_REMOTE_BRANCH"
+
           echo "Step 1: Verify local artifact directory exists & is not empty"
           if [ ! -d "$LOCAL_DIR" ]; then
             echo "ERROR: Artifact directory not found: $LOCAL_DIR"
@@ -108,7 +113,7 @@ pipeline {
           ls -la "$LOCAL_DIR"
 
           echo "Step 2: Artifacts will be uploaded here"
-          echo "Remote path: //${SMB_SERVER}/${SMB_BASE}/${JOB_ROOT}/${REMOTE_BRANCH}/${REMOTE_RUN}"
+          echo "Remote path: //${SMB_SERVER}/${SMB_BASE}/${JOB_ROOT}/${SAFE_REMOTE_BRANCH}/${REMOTE_RUN}"
 
           SMB_OUTPUT=$(mktemp)
 
@@ -118,8 +123,8 @@ pipeline {
               cd ${SMB_BASE};
               mkdir ${JOB_ROOT};
               cd ${JOB_ROOT};
-              mkdir ${REMOTE_BRANCH};
-              cd ${REMOTE_BRANCH};
+              mkdir ${SAFE_REMOTE_BRANCH};
+              cd ${SAFE_REMOTE_BRANCH};
               mkdir ${REMOTE_RUN};
               cd ${REMOTE_RUN};
               lcd ${LOCAL_DIR};
@@ -138,7 +143,7 @@ pipeline {
           fi
           echo "INFO: SMB upload completed without critical errors."
           rm -f "$SMB_OUTPUT"
-          echo "SUCCESS: Artifacts uploaded to //${SMB_SERVER}/${SMB_BASE}/${JOB_ROOT}/${REMOTE_BRANCH}/${REMOTE_RUN}"
+          echo "SUCCESS: Artifacts uploaded to //${SMB_SERVER}/${SMB_BASE}/${JOB_ROOT}/${SAFE_REMOTE_BRANCH}/${REMOTE_RUN}"
         ''')
       }
     }
