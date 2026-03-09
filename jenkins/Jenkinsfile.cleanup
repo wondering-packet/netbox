@@ -4,7 +4,7 @@ pipeline {
   agent {
     label 'netbox'
   }
-    // stages are the high level steps. each stage can have multiple steps.
+  // stages are the high level steps. each stage can have multiple steps.
   stages {
     // a standard 'checkout' stage. this checks out the git repo locally.
     stage('Checkout') {
@@ -15,7 +15,7 @@ pipeline {
     // setting up python & the venv.
     stage('Setup python venv'){
         steps {
-            // 'sh' is our linux bash command runner. label is just an identifier for the step.
+          // 'sh' is our linux bash command runner. label is just an identifier for the step.
           sh (label: 'setup-venv', script: '''#!/bin/bash
 
           set -euo pipefail # this is a common set of bash options to make the script more robust. it means:
@@ -87,7 +87,7 @@ pipeline {
             )
         }
     }
-    }
+  }
     */
     stage('SMB offload prep') {
   environment {
@@ -98,7 +98,7 @@ pipeline {
   }
 
   steps {
-    sh '''#!/bin/bash
+    sh (label: 'Offloading artifacts to jenkins smb share', script: '''#!/bin/bash
       set -euo pipefail
 
       LOCAL_DIR="artifacts-cleanup/${RUN_ID}"
@@ -117,16 +117,14 @@ pipeline {
         -c "mkdir ${JOB_NAME}; cd ${JOB_NAME}; mkdir ${RUN_ID}; ls"
 
       echo "SUCCESS: SMB checks passed and remote path created."
-    '''
+    ''')
   }
-}
+    }
 
-
-  
   post {
     always {
       // cleaning up the workspace
       cleanWs()
+    }
   }
-}
 }
