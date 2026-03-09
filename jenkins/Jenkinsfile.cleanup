@@ -85,8 +85,8 @@ pipeline {
           set -euo pipefail
 
           LOCAL_DIR="artifacts-cleanup/${RUN_ID}"
-          REMOTE_JOB="${JOB_NAME}"
-          REMOTE_BRANCH="${BRANCH_NAME:-main}"
+          REMOTE_JOB="${JOB_NAME%%/*}"
+          REMOTE_BRANCH="${JOB_NAME#*/}"
           REMOTE_RUN="${RUN_ID}"
 
           echo "Step 1: Verify local artifact directory exists"
