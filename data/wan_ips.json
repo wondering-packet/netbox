@@ -3,7 +3,7 @@
   "inventory_version": "2.1.0",
   "meraki": [
     {
-      "ip": "52.14.210.33",
+      "ip": "52.14.210.34",
       "infrastructure_type": "Cloud",
       "provider": "AWS",
       "region": "us-east-2",
@@ -12,7 +12,7 @@
       "caption": "AWS-ELB-001"
     },
     {
-      "ip": "20.112.45.1",
+      "ip": "20.112.45.137",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
       "region": "westeurope",
