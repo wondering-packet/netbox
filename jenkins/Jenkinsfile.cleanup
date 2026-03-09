@@ -75,7 +75,7 @@ pipeline {
         RUN_ID = "${env.BUILD_ID}"
 
         // Jenkins credential of type: Username with password
-        SMB_CREDS = credentials('smb-creds-id')
+        SMB_CREDS = credentials('jenkins-artifacts-smb')
 
         SMB_SERVER = 'dc-01.intra.wonderingpacket.com'
         SMB_SHARE  = 'jenkins-artifacts'
