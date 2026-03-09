@@ -86,10 +86,6 @@ pipeline {
 
           LOCAL_DIR="artifacts-cleanup/${RUN_ID}"
 
-          # Multibranch job example:
-          # JOB_NAME="Netbox_Git_WAN_IP_Cleanup/main"
-          JOB_ROOT="${JOB_NAME%%/*}"
-          REMOTE_BRANCH="${JOB_NAME#*/}"
           REMOTE_RUN="${RUN_ID}"
 
           echo "Step 1: Verify local artifact directory exists & is not empty"
@@ -106,7 +102,7 @@ pipeline {
           ls -la "$LOCAL_DIR"
 
           echo "Step 2: Artifacts will be uploaded here"
-          echo "Remote path: //${SMB_SERVER}/${SMB_BASE}/${JOB_ROOT}/${REMOTE_BRANCH}/${REMOTE_RUN}"
+          echo "Remote path: //${SMB_SERVER}/${SMB_BASE}/${JOB_NAME}/${REMOTE_RUN}"
 
           SMB_OUTPUT=$(mktemp)
 
@@ -114,10 +110,8 @@ pipeline {
             -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
             -c "
               cd ${SMB_BASE};
-              mkdir ${JOB_ROOT};
-              cd ${JOB_ROOT};
-              mkdir ${REMOTE_BRANCH};
-              cd ${REMOTE_BRANCH};
+              mkdir ${JOB_NAME};
+              cd ${JOB_NAME};
               mkdir ${REMOTE_RUN};
               cd ${REMOTE_RUN};
               lcd ${LOCAL_DIR};
@@ -136,7 +130,7 @@ pipeline {
           fi
           echo "INFO: SMB upload completed without critical errors."
           rm -f "$SMB_OUTPUT"
-          echo "SUCCESS: Artifacts uploaded to //${SMB_SERVER}/${SMB_BASE}/${JOB_ROOT}/${REMOTE_BRANCH}/${REMOTE_RUN}"
+          echo "SUCCESS: Artifacts uploaded to //${SMB_SERVER}/${SMB_BASE}/${JOB_NAME}/${REMOTE_RUN}"
         ''')
       }
     }
