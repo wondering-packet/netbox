@@ -21,7 +21,7 @@
       "caption": "AZ-VPN-EU-02"
     },
     {
-      "ip": "20.112.45.12",
+      "ip": "20.112.45.1",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
       "region": "westeurope",
