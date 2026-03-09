@@ -3,7 +3,7 @@
   "inventory_version": "2.1.0",
   "meraki": [
     {
-      "ip": "52.14.210.38",
+      "ip": "52.14.210.44",
       "infrastructure_type": "Cloud",
       "provider": "AWS",
       "region": "us-east-2",
