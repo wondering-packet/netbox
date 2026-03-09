@@ -12,7 +12,7 @@
       "caption": "AWS-ELB-001"
     },
     {
-      "ip": "20.112.45.1",
+      "ip": "20.112.45.137",
       "infrastructure_type": "Cloud",
       "provider": "Azure",
       "region": "westeurope",
