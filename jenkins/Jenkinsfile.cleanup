@@ -69,7 +69,7 @@ pipeline {
             )
         }
     }
-
+/*
     stage('Artifacts Offloading') {
         environment {
             RUN_ID = "${env.BUILD_ID}"
@@ -88,6 +88,40 @@ pipeline {
         }
     }
     }
+    */
+    stage('SMB offload prep') {
+  environment {
+    RUN_ID = "${env.BUILD_ID}"
+    SMB_CREDS = credentials('jenkins-artifacts-smb')
+    SMB_SERVER = 'dc-01.intra.wonderingpacket.com'
+    SMB_SHARE  = 'jenkins-artifacts'
+  }
+
+  steps {
+    sh '''#!/bin/bash
+      set -euo pipefail
+
+      LOCAL_DIR="artifacts-cleanup/${RUN_ID}"
+
+      if [ ! -d "$LOCAL_DIR" ]; then
+        echo "ERROR: Local directory not found: $LOCAL_DIR"
+        exit 1
+      fi
+
+      smbclient "//$SMB_SERVER/$SMB_SHARE" \
+        -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
+        -c 'ls'
+
+      smbclient "//$SMB_SERVER/$SMB_SHARE" \
+        -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
+        -c "mkdir ${JOB_NAME}; cd ${JOB_NAME}; mkdir ${RUN_ID}; ls"
+
+      echo "SUCCESS: SMB checks passed and remote path created."
+    '''
+  }
+}
+
+
   
   post {
     always {
