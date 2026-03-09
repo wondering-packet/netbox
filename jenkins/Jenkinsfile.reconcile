@@ -91,7 +91,6 @@ pipeline {
           # Multibranch job example:
           # JOB_NAME="Netbox_Git_WAN_IP_Reconcilation/main"
           JOB_ROOT="${JOB_NAME%%/*}"
-          echo "Job Name: ${JOB_NAME}"
 
           REMOTE_RUN="${RUN_ID}"
 
