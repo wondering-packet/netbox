@@ -4,7 +4,7 @@ pipeline {
     agent {
     label 'netbox'
   }    // run this pipeline on any executor.
-    // stages are the high level steps. each stage can have multiple steps.
+  // stages are the high level steps. each stage can have multiple steps.
   stages {
     // a standard 'checkout' stage. this checks out the git repo locally.
     stage('Checkout') {
@@ -13,10 +13,10 @@ pipeline {
       }
     }
     // setting up python & the venv.
-    stage('Setup python venv'){
+    stage('Setup python venv') {
         steps {
-            // 'sh' is our linux bash command runner. label is just an identifier for the step.
-          sh (label: 'setup-venv', script: '''#!/bin/bash
+          // 'sh' is our linux bash command runner. label is just an identifier for the step.
+          sh(label: 'setup-venv', script: '''#!/bin/bash
 
           set -euo pipefail # this is a common set of bash options to make the script more robust. it means:
                           # -e: exit immediately if a command exits with a non-zero status.
@@ -50,6 +50,12 @@ pipeline {
     }
     // next stage. running scripts here.
     stage('Reconcilation') {
+        when {
+          beforeAgent true
+          allOf {
+              branch 'main'
+              changeset pattern: 'data/wan_ips.json', comparator: 'EQUALS'
+          }
         environment {
             // setting env variables for this stage. we will use these in the script.
             NETBOX_URL = credentials('NETBOX_URL')
@@ -57,7 +63,7 @@ pipeline {
             RUN_ID = "${env.BUILD_ID}"  // using jenkins build id in scripts later for logging/tracking.
         }
         steps {
-            sh (label: 'connectinvity test + reconcilation', script: '''#!/bin/bash
+            sh(label: 'connectinvity test + reconcilation', script: '''#!/bin/bash
             set -euo pipefail
             . .netbox-venv/bin/activate
             echo "\nStep 1: Running netbox connectivity test script"
@@ -71,6 +77,12 @@ pipeline {
     }
 
     stage('SMB Upload Artifacts') {
+      when {
+          beforeAgent true
+          allOf {
+              branch 'main'
+              changeset pattern: 'data/wan_ips.json', comparator: 'EQUALS'
+          }
       environment {
         RUN_ID = "${env.BUILD_ID}"
         SMB_CREDS = credentials('jenkins-artifacts-smb')
@@ -87,6 +99,10 @@ pipeline {
 
           LOCAL_DIR="${LOCAL_DIR}/${RUN_ID}"
 
+          # Multibranch job example:
+          # JOB_NAME="Netbox_Git_WAN_IP_Reconcilation/main"
+          JOB_ROOT="${JOB_NAME%%/*}"
+          REMOTE_BRANCH="${JOB_NAME#*/}"
           REMOTE_RUN="${RUN_ID}"
 
           echo "Step 1: Verify local artifact directory exists & is not empty"
@@ -103,7 +119,7 @@ pipeline {
           ls -la "$LOCAL_DIR"
 
           echo "Step 2: Artifacts will be uploaded here"
-          echo "Remote path: //${SMB_SERVER}/${SMB_BASE}/${JOB_NAME}/${REMOTE_RUN}"
+          echo "Remote path: //${SMB_SERVER}/${SMB_BASE}/${JOB_ROOT}/${REMOTE_BRANCH}/${REMOTE_RUN}"
 
           SMB_OUTPUT=$(mktemp)
 
@@ -111,8 +127,10 @@ pipeline {
             -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
             -c "
               cd ${SMB_BASE};
-              mkdir ${JOB_NAME};
-              cd ${JOB_NAME};
+              mkdir ${JOB_ROOT};
+              cd ${JOB_ROOT};
+              mkdir ${REMOTE_BRANCH};
+              cd ${REMOTE_BRANCH};
               mkdir ${REMOTE_RUN};
               cd ${REMOTE_RUN};
               lcd ${LOCAL_DIR};
@@ -131,16 +149,16 @@ pipeline {
           fi
           echo "INFO: SMB upload completed without critical errors."
           rm -f "$SMB_OUTPUT"
-          echo "SUCCESS: Artifacts uploaded to //${SMB_SERVER}/${SMB_BASE}/${JOB_NAME}/${REMOTE_RUN}"
+          echo "SUCCESS: Artifacts uploaded to //${SMB_SERVER}/${SMB_BASE}/${JOB_ROOT}/${REMOTE_BRANCH}/${REMOTE_RUN}"
         ''')
       }
     }
-    }
-  
+  }
+
   post {
     always {
       // cleaning up the workspace
       cleanWs()
+    }
   }
-}
 }
