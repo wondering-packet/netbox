@@ -74,33 +74,45 @@ pipeline {
       environment {
         RUN_ID = "${env.BUILD_ID}"
         SMB_CREDS = credentials('jenkins-artifacts-smb')
+
         SMB_SERVER = 'dc-01.intra.wonderingpacket.com'
-        SMB_SHARE  = 'jenkins-artifacts/test'
+        SMB_SHARE  = 'jenkins-artifacts'
+        SMB_BASE   = 'test'
       }
 
       steps {
-        sh(label: 'Offloading artifacts to jenkins smb share', script: '''#!/bin/bash
+        sh(label: 'test smb auth + verify local dir + create remote path', script: '''#!/bin/bash
           set -euo pipefail
 
           LOCAL_DIR="artifacts-cleanup/${RUN_ID}"
 
+          echo "Step 1: Verify local artifact directory exists"
           if [ ! -d "$LOCAL_DIR" ]; then
             echo "ERROR: Local directory not found: $LOCAL_DIR"
             exit 1
           fi
+          echo "OK: Local directory exists: $LOCAL_DIR"
 
+          echo "Step 2: Test SMB access inside allowed base path only"
           smbclient "//$SMB_SERVER/$SMB_SHARE" \
             -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
-            -c 'ls'
+            -c "cd ${SMB_BASE}; pwd"
 
+          echo "Step 3: Create remote job directory under ${SMB_BASE}"
           smbclient "//$SMB_SERVER/$SMB_SHARE" \
             -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
-            -c "mkdir ${JOB_NAME}; cd ${JOB_NAME}; mkdir ${RUN_ID}; ls"
+            -c "cd ${SMB_BASE}; mkdir ${JOB_NAME}; cd ${JOB_NAME}; pwd" || true
 
-          echo "SUCCESS: SMB checks passed and remote path created."
+          echo "Step 4: Create remote run directory under ${SMB_BASE}/${JOB_NAME}"
+          smbclient "//$SMB_SERVER/$SMB_SHARE" \
+            -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
+            -c "cd ${SMB_BASE}; cd ${JOB_NAME}; mkdir ${RUN_ID}; cd ${RUN_ID}; pwd"
+
+          echo "SUCCESS: SMB auth worked and remote path is ready:"
+          echo "${SMB_BASE}/${JOB_NAME}/${RUN_ID}"
         ''')
-      }
-    }
+  }
+}
   }
     post {
       always {
