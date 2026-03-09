@@ -1,4 +1,6 @@
 // bash is new to me. just adding a few comments for easier understanding. code is generated with the help of chatgpt.
+// Note that this pipeline is for non main branches. so this one doesn't include the When condition for branch filtering.
+// also there is an additional If block to replace hyphens in branch names with underscores for SMB compatibility.
 
 pipeline {
     agent {
