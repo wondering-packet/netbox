@@ -70,22 +70,70 @@ pipeline {
         }
     }
 
-    stage('Artifacts Offloading') {
-        environment {
-            RUN_ID = "${env.BUILD_ID}"
-        }
-        steps {
-            sh (label: 'Offloading artifacts to jenkins smb share', script: '''#!/bin/bash
-            set -euo pipefail
-            DEST="/mnt/jenkins-artifacts/${JOB_NAME}/${RUN_ID}"
-            mkdir -p "$DEST"
-            [ -d "artifacts/${RUN_ID}" ] && rsync -a "artifacts/${RUN_ID}/" "$DEST/"
+    stage('SMB Upload Artifacts') {
+      environment {
+        RUN_ID = "${env.BUILD_ID}"
+        SMB_CREDS = credentials('jenkins-artifacts-smb')
 
-            echo "Artifacts offloaded to $DEST. Contents:"
-            ls -R "$DEST"
-            '''
-            )
-        }
+        SMB_SERVER = 'dc-01.intra.wonderingpacket.com'
+        SMB_SHARE  = 'jenkins-artifacts'
+        SMB_BASE   = 'netbox'
+        LOCAL_DIR  = 'artifacts'
+      }
+
+      steps {
+        sh(label: 'upload artifacts to SMB', script: '''#!/bin/bash
+          set -euo pipefail
+
+          LOCAL_DIR="${LOCAL_DIR}/${RUN_ID}"
+
+          REMOTE_RUN="${RUN_ID}"
+
+          echo "Step 1: Verify local artifact directory exists & is not empty"
+          if [ ! -d "$LOCAL_DIR" ]; then
+            echo "ERROR: Artifact directory not found: $LOCAL_DIR"
+            exit 1
+          fi
+          if [ -z "$(ls -A "$LOCAL_DIR")" ]; then
+            echo "ERROR: Artifact directory is empty: $LOCAL_DIR"
+            exit 1
+          fi
+
+          echo "INFO: Artifacts found locally:"
+          ls -la "$LOCAL_DIR"
+
+          echo "Step 2: Artifacts will be uploaded here"
+          echo "Remote path: //${SMB_SERVER}/${SMB_BASE}/${JOB_NAME}/${REMOTE_RUN}"
+
+          SMB_OUTPUT=$(mktemp)
+
+          smbclient "//$SMB_SERVER/$SMB_SHARE" \
+            -U "${SMB_CREDS_USR}%${SMB_CREDS_PSW}" \
+            -c "
+              cd ${SMB_BASE};
+              mkdir ${JOB_NAME};
+              cd ${JOB_NAME};
+              mkdir ${REMOTE_RUN};
+              cd ${REMOTE_RUN};
+              lcd ${LOCAL_DIR};
+              prompt OFF;
+              recurse ON;
+              mput *
+            " 2>&1 | tee "$SMB_OUTPUT"
+
+          echo "Step 3: Check for real SMB errors"
+
+          # Remove harmless 'already exists' collisions from the error check
+          if grep 'NT_STATUS' "$SMB_OUTPUT" | grep -v 'NT_STATUS_OBJECT_NAME_COLLISION' >/dev/null; then
+            echo "ERROR: smbclient reported a real SMB error."
+            rm -f "$SMB_OUTPUT"
+            exit 1
+          fi
+          echo "INFO: SMB upload completed without critical errors."
+          rm -f "$SMB_OUTPUT"
+          echo "SUCCESS: Artifacts uploaded to //${SMB_SERVER}/${SMB_BASE}/${JOB_NAME}/${REMOTE_RUN}"
+        ''')
+      }
     }
     }
   
