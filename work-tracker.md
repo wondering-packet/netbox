@@ -1,6 +1,6 @@
 # NetBox WAN IP Automation & CI Integration
 
-## Epic Overview
+## Feature Overview
 
 **Goal**
 
