@@ -175,10 +175,5 @@ Refactor the existing WAN IP data aggregation application so it can run securely
 * Refactor application into a CI-compatible CLI tool
 * Implement secure credential handling via Jenkins
 * Extend Meraki data collection to include **organization name**
-* Validate and align Aruba data collection with unified schema
-* Consolidate platform data into a single `wan_ips.json`
-* Implement automated Git commit logic for dataset updates
-* Integrate the application into Jenkins pipeline execution
-* Add structured logging and execution summaries
 
 ---
