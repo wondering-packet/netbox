@@ -131,7 +131,7 @@ pipeline {
           ls -la "$LOCAL_DIR"
 
           echo "Step 2: Artifacts will be uploaded here"
-          echo "Remote path: //${SMB_SERVER}/${SMB_BASE}/${JOB_ROOT}/${REMOTE_BRANCH}/${REMOTE_RUN}"
+          echo "Remote path: //${SMB_SERVER}/${SMB_SHARE}/${SMB_BASE}/${JOB_ROOT}/${REMOTE_BRANCH}/${REMOTE_RUN}"
 
           SMB_OUTPUT=$(mktemp)
 
